@@ -1,26 +1,167 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@theme inline {
+
+/* ---------------- FONT CLASSES ---------------- */
+.font-montserrat { font-family: var(--font-montserrat); }
+.font-delagothic { font-family: var(--font-dela-gothic); }
+.font-francoisone { font-family: var(--font-francois-one); }
+.font-arenq { font-family: var(--font-arenq); }
+.font-beckman { font-family: var(--font-beckman); }
+.font-gobold { font-family: var(--font-gobold); }
+.font-mova { font-family: var(--font-mova); }
+.font-overcamebold { font-family: var(--font-overcame-bold); }
+.font-overcameoutline { font-family: var(--font-overcame-outline); }
+.font-peckhampress { font-family: var(--font-peckham-press); }
+.font-smirnow { font-family: var(--font-smirnow); }
+
+
+
+
+
+/* ---------------- THEME TOKENS ---------------- */
+@theme {
+  --color-hueso: #F4F1EA;
+  --color-militar: #2C3822;
+  --color-militar-dark: #1C2315;
+  --color-oliva:  #45682E;
+  --color-oliva-light: #B0D182;
+
+  
+  --color-logo: #B0D182;  /* -- Custom color for the navbar logo text -- */
+  --color-hover-link: #45682E;
+  --color-active-link: #45682E;  /* -- Custom color for the navbar logo text -- */
+  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent: var(--accent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------------- LIGHT MODE ---------------- */
+:root {
+  --background: var(--color-hueso);
+  --foreground: var(--color-militar-dark);
+  --accent: var(--color-oliva);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------- DARK MODE ---------------- */
+html.dark {
+  --background: var(--color-militar-dark);
+  --foreground: var(--color-hueso);
+  --accent: var(--color-oliva-light);
+  --color-logo: #B0D182;  /* -- Custom color for the navbar logo text -- */
+  --color-hover-link: #B0D182;
+  --color-active-link: #B0D182; 
+}
+
+
+
+
+
+body{
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 200ms ease-in-out, color 200ms ease-in-out
+}
+
+
+.text-stroke {
+  -webkit-text-stroke: .5px #1C2315;
+}
+
+.text-stroke2 {
+  -webkit-text-stroke: .1px #1C2315;
+}
+
+
+.switch-neon:hover{
+    color: #FAE846;
+    filter: drop-shadow(0 0 40px #FAE846) contrast(5) brightness(2);
+}
+
+
+
+.hero-shadow{
+   box-shadow: rgba(0,0,0,0.4) 0px 8px 32px 0px;
+}
+
+.hero-shadow2{
+   box-shadow: rgba(0,0,0,0.4) 0px 5px 10px 0px;
+}
+
+
+
+.mobile-glass{
+    backdrop-filter: blur(7px) saturate(190%);
+    -webkit-backdrop-filter: blur(7px) saturate(180%);
+    background-color: rgba(244, 241, 234, 0.75);
+}
+
+
+
+
+
+/* ---------------- HERO BUTTONS ---------------- */
+.prime-button { 
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #45682E;
+    border-radius: 5rem;
+    border: none;
+    color: #F4F1EA;
+    letter-spacing: 0.4px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: none; /* no shadow at rest */
+}
+
+.prime-button:hover {
+    background: #2C3822;
+}
+
+
+
+.dark .prime-button{
+    background: #B0D182;
+    color: #1C2315;
+}
+
+.dark .prime-button:hover {
+    box-shadow: 0 0 5px #B0D182, 0 0 10px #B0D182, 0 0 20px #B0D182, 0 0 40px #B0D182;
+}
+
+
+
+.second-button{
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    border-radius: 5rem;
+    border: 2px solid #45682E;
+    color: #1C2315;
+    letter-spacing: 0.4px;
+    transition: all 0.4s ease;
+}
+
+
+.second-button:hover{
+    background: #B0D182;
+    color: #1C2315;
+}
+
+.dark .second-button{
+    background: transparent;
+    color: #B0D182;
+    border: 2px solid #B0D182;
+}
+
+.dark .second-button:hover{
+    background: #B0D182;
+    color: #1C2315;
 }
