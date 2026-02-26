@@ -22,7 +22,10 @@ export default function FadeInSection({
       ([entry]) => {
         if (entry.isIntersecting) setVisible(true);
       },
-      { threshold }
+      {
+        threshold,
+        rootMargin: "0px 0px -100px 0px", // trigger slightly before fully visible
+      }
     );
 
     const currentRef = ref.current;
@@ -34,17 +37,16 @@ export default function FadeInSection({
   }, [threshold]);
 
   return (
-<div
-  ref={ref}
-  className={`
-    transition-all duration-1100 ease-[cubic-bezier(0.16,1,0.3,1)]
-    ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-    ${delay ? `transition-delay-[${delay}ms]` : ""}
-    ${className}
-  `}
->
-  {children}
-</div>
-
+    <div
+      ref={ref}
+      className={`
+        transition-all duration-1100 ease-[cubic-bezier(0.16,1,0.3,1)]
+        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+        ${delay ? `transition-delay-[${delay}ms]` : ""}
+        ${className}
+      `}
+    >
+      {children}
+    </div>
   );
 }
