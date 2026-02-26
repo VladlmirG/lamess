@@ -1,11 +1,10 @@
-import EnDesarrollo from '@/components/tabula-rasa/EnDesarrollo'
-import React from 'react'
+import ServiciosComponent from "@/components/tabula-rasa/Servicios"
 
 const servicios = () => {
   return (
-    <div>
-      <EnDesarrollo/>
-    </div>
+    <section>
+      <ServiciosComponent />
+    </section>
   )
 }
 

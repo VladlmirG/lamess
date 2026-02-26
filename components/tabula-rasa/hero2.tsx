@@ -42,11 +42,11 @@ export default function Hero2() {
       <div className="absolute top-0 right-0 h-full w-64 z-0 pointer-events-none bg-linear-to-l from-background to-transparent" />
 
       {/* Hero content */}
-      <div className="z-10 w-full grid lg:grid-cols-2 gap-12 lg:gap-2 items-center mx-8">
+      <div className="z-10 w-full grid lg:grid-cols-2 gap-12 lg:gap-8 items-center mx-8">
         {/* LEFT SIDE */}
         <div className="flex flex-col justify-center space-y-12 mt-5 text-center md:text-left">
           <h1 className="text-xl md:text-2xl xl:text-3xl 2xl:text-5xl tracking-wider font-peckhampress">
-            Entregas directas <span className="text-logo text-stroke">B2B</span> en bicicleta de carga
+            Entregas directas entre profesionales en <span className="text-logo text-stroke">bicicleta de carga</span>  
           </h1>
 
           <p className="text-sm md:text-md lg:text-xs xl:text-xl 2xl:text-2xl text-foreground/70  max-w-2xl mx-auto md:mx-0 tracking-wide font-gobold">
