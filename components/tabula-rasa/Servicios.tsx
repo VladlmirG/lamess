@@ -128,7 +128,7 @@ export default function ServiciosComponent() {
             return (
               <div key={index} className="group relative overflow-hidden rounded-2xl p-6 h-80 flex flex-col justify-center hover:shadow-2xl transition-all duration-300">
                 {/* Hover Background Image */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 transition-opacity duration-500"
                   style={{
                     backgroundImage: `url(${service.image})`,
                     backgroundSize: "cover",
@@ -136,7 +136,7 @@ export default function ServiciosComponent() {
                   }}/>
 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-linear-to-br from-oliva/80 via-oliva/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-br from-oliva/80 via-oliva/70 to-transparent opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 transition-opacity duration-500" />
 
                 {/* Card Content */}
                 <div className="relative z-10 flex flex-col h-full justify-center">
