@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { HiTruck, HiSpeakerphone, HiShoppingCart, HiLightBulb, HiAcademicCap, HiCog, HiArchive, HiInbox, } from "react-icons/hi";
 import { BsTools } from "react-icons/bs";
 import { IconType } from "react-icons";
+import FadeInSection from "./FadeInSection";
+
 
 interface CardItem {
   title: string;
@@ -108,6 +110,8 @@ export default function ServiciosComponent() {
       <div className="absolute top-0 left-0 h-full w-64 z-0 pointer-events-none bg-linear-to-r from-background to-transparent" />
       <div className="absolute top-0 right-0 h-full w-64 z-0 pointer-events-none bg-linear-to-l from-background to-transparent" />
 
+
+       <FadeInSection>
       <div className="mx-auto px-4 md:px-12 relative z-10">
         {/* Top title & paragraph */}
         <div className="text-center mb-8 md:mb-12">
@@ -156,6 +160,7 @@ export default function ServiciosComponent() {
           })}
         </div>
       </div>
+        </FadeInSection>
     </section>
   );
 }
