@@ -3,11 +3,11 @@ import ServiciosComponent from "@/components/tabula-rasa/Servicios"
 
 const servicios = () => {
   return (
+  <FadeInSection>
     <section>
-      <FadeInSection>
       <ServiciosComponent />
-      </FadeInSection>
     </section>
+  </FadeInSection>
   )
 }
 
