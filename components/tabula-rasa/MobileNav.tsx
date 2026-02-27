@@ -9,7 +9,8 @@ import { usePathname } from "next/navigation";
 const links = [
   { name: "Inicio", path: "/" },
   { name: "Servicios", path: "/servicios" },
-  { name: "Tarifas", path: "/tarifas" },
+  { name: "Tarifas Barcelona", path: "/tarifas-barcelona" },
+  { name: "Tarifas Madrid", path: "/tarifas" },
   { name: "Nosotros", path: "/nosotros" },
   { name: "Calculador", path: "/calculador" },
   { name: "Contacto", path: "/contacto" },

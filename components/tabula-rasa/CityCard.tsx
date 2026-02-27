@@ -76,9 +76,11 @@ export default function CityCard() {
             </h3>
 
             <div className="flex gap-3 mt-4 justify-end">
-              <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/70 transition font-montserrat">
+              <Link href="./tarifas-barcelona">
+              <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/70 transition font-montserrat cursor-pointer">
                 Ver tarifas
               </button>
+              </Link>
               <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva">
                 Calcular envío
               </button>
