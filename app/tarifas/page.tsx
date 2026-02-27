@@ -1,10 +1,10 @@
-import EnDesarrollo from '@/components/tabula-rasa/EnDesarrollo'
+import TarifasBarcelona from '@/components/tabula-rasa/TarifasBarcelona'
 import React from 'react'
 
 const tarifas = () => {
   return (
     <div>
-      <EnDesarrollo/>
+      <TarifasBarcelona/> 
     </div>
   )
 }
