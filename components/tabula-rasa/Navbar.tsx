@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const isTarifasActive =
     pathname === "/tarifas-barcelona" ||
-    pathname === "/tarifas/madrid";
+    pathname === "/tarifas-madrid";
 
   return (
     <nav className="hidden md:flex gap-8 items-center">
@@ -58,7 +58,7 @@ export default function Navbar() {
             asChild
             className="bg-transparent text-foreground hover:text-hover-link focus:bg-transparent focus:text-hover-link"
           >
-            <Link href="/tarifas/madrid" className="cursor-pointer">
+            <Link href="/tarifas-madrid" className="cursor-pointer">
               Madrid
             </Link>
           </DropdownMenuItem>

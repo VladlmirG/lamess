@@ -6,7 +6,7 @@ import FadeInSection from "./FadeInSection";
 export default function CityCard() {
   return (
     <FadeInSection>
-    <section className="py-20">
+    <section id="ciudades" className="py-20 scroll-mt-24 md:scroll-mt-28 lg:scroll-mt-32">
       
       {/* Title */}
       <div className="text-center max-w-2xl mx-auto">
@@ -42,9 +42,11 @@ export default function CityCard() {
               <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva">
                 Calcular envío
               </button>
-              <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/80 transition font-montserrat">
+              <Link href="/tarifas-madrid" scroll={true}>
+              <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/80 transition font-montserrat cursor-pointer">
                 Ver tarifas
               </button>
+              </Link>
             </div>
 
           </div>
@@ -76,7 +78,7 @@ export default function CityCard() {
             </h3>
 
             <div className="flex gap-3 mt-4 justify-end">
-              <Link href="./tarifas-barcelona">
+              <Link href="/tarifas-barcelona" scroll={true}>
               <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/70 transition font-montserrat cursor-pointer">
                 Ver tarifas
               </button>

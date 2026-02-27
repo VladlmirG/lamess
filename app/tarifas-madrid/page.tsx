@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import TarifasBarcelona from '@/components/tabula-rasa/TarifasBarcelona'
+import TarifasMadrid from '@/components/tabula-rasa/TarifasMadrid'
 
 export default function TarifasM() {
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function TarifasM() {
   
   return (
     <div>
-      <TarifasBarcelona/> 
+      <TarifasMadrid/>
     </div>
   )
 }

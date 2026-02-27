@@ -41,7 +41,7 @@ export default function MobileNav() {
             <Link
               key={link.path}
               href={link.path}
-              className={`text-lg uppercase font-montserrat tracking-widest font-bold transition-colors duration-300 border-b-2 border-transparent ${
+              className={`xs:text-sm sm:text-md md:text-lg uppercase font-montserrat tracking-widest font-bold transition-colors duration-300 border-b-2 border-transparent ${
                 pathname === link.path ? "border-accent" : ""
               } text-foreground hover:text-accent`}
             >

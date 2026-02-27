@@ -58,9 +58,9 @@ export default function Hero2() {
               Calcular envío
             </button>
 
-            <button className="px-6 py-3 second-button font-montserrat font-bold">
+            <a  href="#ciudades" className="px-6 py-3 second-button font-montserrat font-bold">
               Ver tarifas
-            </button>
+            </a>
           </div>
         </div>
 
