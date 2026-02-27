@@ -1,12 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FaClock, FaCalculator, FaExclamationCircle } from "react-icons/fa";
+import { FaClock, FaExclamationCircle } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
-import { PiPackageLight } from "react-icons/pi";
-import { PiHandCoinsFill } from "react-icons/pi";
+import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
+import { CiCalculator2 } from "react-icons/ci";
 
 
 export default function TarifasBarcelona() {
@@ -41,10 +43,45 @@ export default function TarifasBarcelona() {
     },
   ];
 
-  return (
-    <section className="relative w-full py-16">
-      <div className="mx-auto max-w-6xl px-1 md:px-12">
 
+  const [isDark, setIsDark] = useState(false);
+
+useEffect(() => {
+  const root = document.documentElement;
+  const updateDarkMode = () => setIsDark(root.classList.contains("dark"));
+  updateDarkMode();
+
+  const observer = new MutationObserver(updateDarkMode);
+  observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+
+  return () => observer.disconnect();
+}, []);
+
+
+  return (
+   <section className="relative w-full py-16 overflow-hidden">
+
+    {/* Background PNG like Servicios */}
+    <div className="absolute inset-0 -z-10 pointer-events-none">
+      <Image
+        src="/hero/markstest4.png"
+        alt="Background graphic"
+        fill
+        priority
+        className={`hidden lg:block object-contain opacity-2 ${
+          isDark ? "invert" : ""
+        } translate-x-0/4 lg:translate-x-1/4 scale-320 lg:scale-220 xl:scale-150 rotate-40 transition-all duration-200 ease-in-out`}
+      />
+    </div>
+
+     {/* Top, Bottom, Left, Right Fades */}
+     <div className="absolute top-0 left-0 w-full h-10 z-0 pointer-events-none bg-linear-to-b from-background to-transparent" />
+     <div className="absolute bottom-0 left-0 w-full h-15 z-0 pointer-events-none bg-linear-to-t from-background to-transparent" />
+     <div className="absolute top-0 left-0 h-full w-0 lg:w-10 xl:w-20 z-0 pointer-events-none bg-linear-to-r from-background to-transparent" />
+     <div className="absolute top-0 right-0 h-full w-0 lg:w-10 xl:w-20 z-0 pointer-events-none bg-linear-to-l from-background to-transparent" />
+
+
+      <div className="mx-auto max-w-6xl px-1 md:px-12">
         {/* Header */}
         <div className="mb-16 space-y-6 lg:space-y-1">
           {/* City + bike */}
@@ -128,7 +165,7 @@ export default function TarifasBarcelona() {
         </div>
 
         {/* Zonas Table */}
-        <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl shadow-xl overflow-hidden mb-20">
+        <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl shadow-xl overflow-hidden mb-10">
 
           {/* Header Area */}
           <div className="p-6 md:p-10 border-b border-b-foreground/60 flex items-center gap-6 font-montserrat">
@@ -192,20 +229,36 @@ export default function TarifasBarcelona() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="rounded-3xl border bg-linear-to-r from-primary to-primary/80 text-white p-14 text-center shadow-lg">
-          <div className="flex justify-center mb-6 text-3xl">
-            <FaCalculator />
+
+      {/* CTA */}
+      <div className="rounded-3xl px-10 py-6 shadow-lg border border-foreground/40 bg-militar-dark">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+          {/* Left Side (Icon + Text) */}
+          <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+            <div className="text-xl">
+              <CiCalculator2 className="text-oliva-light text-6xl border border-oliva-light/40 p-3 rounded-full"/>
+            </div>
+
+            <div>
+              <h3 className="text-md lg:text-2xl font-bold text-hueso font-gobold tracking-widest mb-2">
+                Calcula tu envío
+              </h3>
+              <p className="text-hueso/70 text-xs lg:text-sm max-w-md font-montserrat">
+                Introduce origen, destino y detalles de carga
+                para obtener un precio estimado al instante.
+              </p>
+            </div>
           </div>
-          <h3 className="text-3xl font-bold mb-4">Calcula tu envío</h3>
-          <p className="mb-10 max-w-xl mx-auto text-white/80">
-            Introduce origen, destino y detalles de carga
-            para obtener un precio estimado al instante.
-          </p>
-          <button className="rounded-xl bg-white text-black px-8 py-4 text-sm font-semibold hover:scale-105 transition">
+
+          {/* Right Side (Button) */}
+          <button className="calc-button text-xs lg:text-sm font-semibold">
             Calcular (Barcelona)
           </button>
+
         </div>
+      </div>
+
 
       </div>
     </section>

@@ -165,3 +165,24 @@ body{
     background: #B0D182;
     color: #1C2315;
 }
+
+
+/* ---------------- CALC BANNER BUTTONS ---------------- */
+.calc-button { 
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: #B0D182;
+    border-radius: 5rem;
+    border: none;
+    color: #1C2315;
+    letter-spacing: 0.3px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: none; /* no shadow at rest */
+}
+
+.calc-button:hover {
+    box-shadow: 0 0 5px #B0D182, 0 0 10px #B0D182, 0 0 20px #B0D182, 0 0 40px #B0D182;
+}
