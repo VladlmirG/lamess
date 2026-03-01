@@ -1,11 +1,16 @@
-import ServiciosComponent from "@/components/tabula-rasa/Servicios"
+"use client";
 
-const servicios = () => {
+import { useEffect } from "react";
+import ServiciosComponent from "@/components/tabula-rasa/Servicios";
+
+export default function Servicios() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <section>
+    <div>
       <ServiciosComponent />
-    </section>
-  )
+    </div>
+  );
 }
-
-export default servicios

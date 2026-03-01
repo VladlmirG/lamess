@@ -1,12 +1,11 @@
-// import Hero from "@/components/tabula-rasa/Hero";
-
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import CityCard from "@/components/tabula-rasa/CityCard";
 import ComoFunciona from "@/components/tabula-rasa/ComoFunciona";
-import Hero2 from "@/components/tabula-rasa/hero2"
+import Hero2 from "@/components/tabula-rasa/hero2";
 import LogosCarousel from "@/components/tabula-rasa/LogosCarousel";
 import QueHacemos from "@/components/tabula-rasa/QueHacemos";
 import ReviewsCarousel from "@/components/tabula-rasa/ReviewsCarousel";
@@ -15,6 +14,10 @@ import Ventajas from "@/components/tabula-rasa/Ventajas";
 export default function Home() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       {/* <Hero/> */}
