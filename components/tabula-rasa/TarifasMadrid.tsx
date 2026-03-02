@@ -158,23 +158,48 @@ useEffect(() => {
             </div>
           </div>
 
-          <div className="relative rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/5 to-oliva/20 backdrop-blur-xl p-10 shadow-sm transition hover:shadow-xl">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="">
-                <FaExclamationCircle className="text-3xl text-militar-dark bg-oliva-light p-1 rounded-full"/>
-              </div>
-              <h3 className="text-xl md:text-lg lg:text-xl font-semibold font-gobold tracking-wider">Recogida fija</h3>
-            </div>
+<div className="group relative rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/5 to-oliva/20 backdrop-blur-xl p-10 shadow-sm transition hover:shadow-xl">
 
-            <div className="flex items-baseline gap-3 font-montserrat">
-              <span className="text-6xl md:text-5xl lg:text-8xl font-bold tracking-tight">2€</span>
-              <span className="text-muted-foreground">por entrega</span>
-            </div>
+  <div className="flex items-center gap-4 mb-8">
+    <div>
+      <FaExclamationCircle className="text-3xl text-militar-dark bg-oliva-light p-1 rounded-full"/>
+    </div>
+    <h3 className="text-xl md:text-lg lg:text-xl font-semibold font-gobold tracking-wider">
+      Ejemplo de cálculo
+    </h3>
+  </div>
 
-            <p className="mt-6 text-xs lg:text-sm  text-muted-foreground">
-              Coste fijo añadido a cada servicio.
-            </p>
-          </div>
+  <div className="space-y-6 font-montserrat">
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">1 Recogida Zona 1</span>
+      <span className="text-lg font-semibold">5,5€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">1 Entrega Zona 1</span>
+      <span className="text-lg font-semibold">5,5€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">1 Entrega Zona 2</span>
+      <span className="text-lg font-semibold">7,5€</span>
+    </div>
+
+    <div className="flex justify-between pt-4 text-2xl font-bold">
+      <span>Total</span>
+      <span className="font-bold">18,5€</span>
+    </div>
+
+  </div>
+
+  <div className="mt-8 pt-6 border-t text-xs lg:text-sm text-muted-foreground leading-relaxed">
+    En Madrid no existe un suplemento fijo de recogida. El precio se aplica por cada punto, ya sea recogida o entrega.
+  </div>
+
+</div>
+
+
         </div>
 
 

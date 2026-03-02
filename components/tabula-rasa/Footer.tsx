@@ -60,12 +60,12 @@ const Footer: FC = () => {
 
             {/* Address */}
             <Link
-              href="https://www.google.com/maps/place/C.+del+Bruc,+63,+Eixample,+08009+Barcelona,+Espa%C3%B1a/@41.393602,2.170156,15z/data=!4m6!3m5!1s0x12a4a2ee860e57ef:0x7b3845b7b87122c9!8m2!3d41.3936024!4d2.170156!16s%2Fg%2F11c3s8_v02?hl=es&entry=ttu&g_ep=EgoyMDI2MDIyMi4wIKXMDSoASAFQAw%3D%3D"
+              href="https://www.google.com/maps/place/Carrer+de+la+Diputaci%C3%B3,+469,+Local+1,+Eixample,+08013+Barcelona/@41.4009263,2.1782408,17z/data=!3m1!4b1!4m6!3m5!1s0x12a4a2de217be109:0x6095cbd10c49ef04!8m2!3d41.4009223!4d2.1808157!16s%2Fg%2F11q57_2_2k?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
               target="_blank"
               className="flex items-center gap-3 font-montserrat text-sm tracking-wide hover:text-oliva-light transition-colors"
             >
               <MapPin size={18} />
-              <span>Carrer del bruc, 63, Barcelona</span>
+              <span>Carrer Diputacion 469, Local 1, 08013, Barcelona</span>
             </Link>
 
             <p>Te recomendamos la mejor opción por zonas, por horas o un servicio a medida.</p>
@@ -91,13 +91,13 @@ const Footer: FC = () => {
 
               <li>
                 <Link
-                  href="mailto:lucas@lamess.es"
+                  href="mailto:administracion@lamess.es"
                   className="flex items-center gap-3 hover:text-oliva-light transition-colors"
                 >
                   <div className="bg-oliva-light p-2 rounded-full flex items-center justify-center">
                     <Mail size={20} className="text-militar" />
                   </div>
-                  <span>lucas@lamess.es</span>
+                  <span>administracion@lamess.es</span>
                 </Link>
               </li>
 

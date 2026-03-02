@@ -2,7 +2,7 @@
 
 // import FadeInSection from "./FadeInSection";
 import Image from "next/image";
-import { FaBicycle, FaHandshake, FaChartLine } from "react-icons/fa";
+import { FaBicycle, FaHandshake, FaChartLine, FaBriefcase } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
 export default function HistoriaSection() {
@@ -12,6 +12,12 @@ export default function HistoriaSection() {
       title: "El inicio",
       text: "Fem-ho amb bici arranca con Lucas, con una idea simple: hacer mensajería urbana de forma eficiente y sostenible.",
       icon: <FaBicycle className="text-militar-dark w-6 h-6" />,
+    },
+      {
+    year: "2019",
+    title: "Emprendimiento familiar",
+    text: "Kike y Juliana arrancan con un emprendimiento familiar, La Moove, en plena época de pandemia.",
+    icon: <FaBriefcase className="text-militar-dark w-6 h-6" />,
     },
     {
       year: "2021",
@@ -86,7 +92,7 @@ export default function HistoriaSection() {
                 style={{ height: `${lineHeight}px`, top: 0 }}
               ></div>
 
-              <ol className="space-y-26 relative z-10">
+              <ol className="space-y-16 relative z-10">
                 {timeline.map((item, index) => (
                   <li key={index} className="relative pl-16">
 

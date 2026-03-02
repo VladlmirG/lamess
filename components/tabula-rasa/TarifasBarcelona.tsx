@@ -145,24 +145,49 @@ useEffect(() => {
             </div>
           </div>
 
-          {/* Recogida fija */}
-          <div className="relative rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/5 to-oliva/20 backdrop-blur-xl p-10 shadow-sm transition hover:shadow-xl">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="">
-                <FaExclamationCircle className="text-3xl text-militar-dark bg-oliva-light p-1 rounded-full"/>
-              </div>
-              <h3 className="text-xl md:text-lg lg:text-xl font-semibold font-gobold tracking-wider">Recogida fija</h3>
-            </div>
+{/* Ejemplo de cálculo */}
+<div className="group relative rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/5 to-oliva/20 backdrop-blur-xl p-10 shadow-sm transition hover:shadow-xl">
 
-            <div className="flex items-baseline gap-3 font-montserrat">
-              <span className="text-6xl md:text-5xl lg:text-8xl font-bold tracking-tight">2€</span>
-              <span className="text-muted-foreground">por entrega</span>
-            </div>
+  <div className="flex items-center gap-4 mb-8">
+    <div>
+      <FaExclamationCircle className="text-3xl text-militar-dark bg-oliva-light p-1 rounded-full"/>
+    </div>
+    <h3 className="text-xl md:text-lg lg:text-xl font-semibold font-gobold tracking-wider">
+      Ejemplo de cálculo
+    </h3>
+  </div>
 
-            <p className="mt-6 text-xs lg:text-sm  text-muted-foreground">
-              Coste fijo añadido a cada servicio.
-            </p>
-          </div>
+  <div className="space-y-6 font-montserrat">
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">1 Recogida</span>
+      <span className="text-lg font-semibold">2€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">Entrega Zona 1</span>
+      <span className="text-lg font-semibold">5,5€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span className="text-sm text-muted-foreground">Entrega Zona 3</span>
+      <span className="text-lg font-semibold">9€</span>
+    </div>
+
+    <div className="flex justify-between pt-4 text-2xl font-bold">
+      <span>Total</span>
+      <span className="font-bold">16,5€</span>
+    </div>
+
+  </div>
+
+  <div className="mt-8 pt-6 border-t text-xs lg:text-sm text-muted-foreground leading-relaxed">
+    En Barcelona, cada servicio incluye un coste fijo de recogida (2€)
+    más el precio correspondiente a la zona de entrega.
+  </div>
+
+</div>
+
         </div>
 
         {/* Zonas Table */}
@@ -173,10 +198,22 @@ useEffect(() => {
             <div className="rounded-xl bg-primary/10 text-primary">
               <PiHandCoinsFill className="text-4xl md:text-5xl text-militar-dark bg-oliva-light p-2 rounded-full"/>
             </div>
-            <div>
-              <h3 className="text-md md:text-xl font-gobold">Tarifas por zona</h3>
-              <p className="text-[9px] md:text-sm text-muted-foreground">Precios según código postal</p>
-            </div>
+<div className="flex items-start justify-between w-full gap-4">
+
+  <div>
+    <h3 className="text-md md:text-xl font-gobold">
+      Tarifas por zona
+    </h3>
+    <p className="text-[9px] md:text-sm text-muted-foreground">
+      Precios según código postal
+    </p>
+  </div>
+
+  <span className="text-[9px] md:text-xs font-semibold whitespace-nowrap mt-5">
+    +2€ recogida única
+  </span>
+
+</div>
           </div>
 
           <div className="overflow-x-auto font-montserrat">
@@ -229,6 +266,45 @@ useEffect(() => {
             </Table>
           </div>
         </div>
+
+
+        {/* Example Calculation */}
+{/* <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/10 to-oliva/5 backdrop-blur-xl shadow-lg p-8 mb-16 font-montserrat">
+
+  <h3 className="text-lg md:text-xl font-gobold mb-6 tracking-wide">
+    Ejemplo de cálculo (Barcelona)
+  </h3>
+
+  <div className="space-y-4 text-sm md:text-base">
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span>1 Recogida</span>
+      <span className="font-semibold">2€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span>Entrega Zona 1</span>
+      <span className="font-semibold">5,5€</span>
+    </div>
+
+    <div className="flex justify-between border-b border-foreground/20 pb-2">
+      <span>Entrega Zona 3</span>
+      <span className="font-semibold">9€</span>
+    </div>
+
+    <div className="flex justify-between pt-4 text-lg font-bold">
+      <span>Total</span>
+      <span className="text-oliva-light">16,5€</span>
+    </div>
+
+  </div>
+
+  <p className="mt-6 text-xs md:text-sm text-muted-foreground">
+    En Barcelona, cada servicio incluye un coste fijo de recogida (2€) más el precio correspondiente a la zona de entrega.
+  </p>
+
+</div> */}
+
 
 
       {/* CTA */}

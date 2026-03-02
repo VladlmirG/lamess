@@ -51,7 +51,7 @@ export default function Hero2() {
           </h1>
 
           <p className="text-sm md:text-md lg:text-xs xl:text-xl 2xl:text-2xl text-foreground/70  max-w-2xl mx-auto md:mx-0 tracking-wide font-gobold">
-             Recogemos y entregamos sin puntos intermedios. Rápidos, fiables y sostenibles en ciudad.
+             Recogemos y entregamos sin puntos intermedios. Rápidos, fiables y sostenibles.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">

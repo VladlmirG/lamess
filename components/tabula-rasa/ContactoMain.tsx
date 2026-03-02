@@ -37,8 +37,8 @@ export default function ContactoMain() {
             <ContactItem
               icon={<Mail size={20} />}
               label="Correo electrónico"
-              value="lucas@lamess.es"
-              href="mailto:lucas@lamess.es"
+              value="administracion@lamess.es"
+              href="mailto:administracion@lamess.es"
             />
             <ContactItem
               icon={<FaWhatsapp size={20} />}
@@ -49,8 +49,8 @@ export default function ContactoMain() {
             <ContactItem
               icon={<MapPin size={20} />}
               label="Ubicación"
-              value="Carrer del bruc, 63, Barcelona"
-              href="https://www.google.com/maps/place/C.+del+Bruc,+63,+Eixample,+08009+Barcelona"
+              value="Carrer Diputacion 469, Local 1, 08013, Barcelona"
+              href="https://www.google.com/maps/place/Carrer+de+la+Diputaci%C3%B3,+469,+Local+1,+Eixample,+08013+Barcelona/@41.4009263,2.1782408,17z/data=!3m1!4b1!4m6!3m5!1s0x12a4a2de217be109:0x6095cbd10c49ef04!8m2!3d41.4009223!4d2.1808157!16s%2Fg%2F11q57_2_2k?entry=ttu&g_ep=EgoyMDI2MDIyNS4wIKXMDSoASAFQAw%3D%3D"
             />
 
             {/* Social Icons */}
