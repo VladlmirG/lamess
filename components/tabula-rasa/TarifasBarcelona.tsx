@@ -9,6 +9,7 @@ import { FaClock, FaExclamationCircle } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; // shadcn tooltip
 
 
 export default function TarifasBarcelona() {
@@ -251,11 +252,20 @@ useEffect(() => {
             </div>
           </div>
 
+
+        <TooltipProvider>
+          <Tooltip>
+           <TooltipTrigger asChild>
           {/* Right Side (Button) */}
           <button className="calc-button text-xs lg:text-sm font-semibold">
             Calcular (Barcelona)
           </button>
-
+        </TooltipTrigger>
+          <TooltipContent side="top" className="max-w-xs text-center border border-foreground/40 text-hueso">
+             Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
+          </TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
         </div>
       </div>
 
