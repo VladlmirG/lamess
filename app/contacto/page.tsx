@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import EnDesarrollo from '@/components/tabula-rasa/EnDesarrollo';
-import React from 'react';
+import ContactoMain from "@/components/tabula-rasa/ContactoMain";
 
 export default function Contacto() {
   useEffect(() => {
@@ -11,7 +10,7 @@ export default function Contacto() {
 
   return (
     <div>
-      <EnDesarrollo />
+      <ContactoMain/>
     </div>
   );
 }
