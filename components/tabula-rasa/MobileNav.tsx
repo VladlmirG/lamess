@@ -12,7 +12,7 @@ const links = [
   { name: "Tarifas Barcelona", path: "/tarifas-barcelona" },
   { name: "Tarifas Madrid", path: "/tarifas-madrid" },
   { name: "Nosotros", path: "/nosotros" },
-  // { name: "Calculador", path: "/calculador" },
+  { name: "Calculador", path: "/calculador" },
   { name: "Contacto", path: "/contacto" },
 ];
 
