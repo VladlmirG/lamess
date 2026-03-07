@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
+    "types": ["react", "node"],  
     "incremental": true,
     "plugins": [
       {
@@ -23,12 +24,22 @@
     }
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
+  "next-env.d.ts",
+  "types/**/*.d.ts",
+  "**/*.ts",
+  "**/*.tsx",
+  ".next/types/**/*.ts",
+  ".next/dev/types/**/*.ts",
+  "**/*.mts",
+  "**/*.ts", "**/*.tsx"
+],
+  // "include": [
+  //   "next-env.d.ts",
+  //   "**/*.ts",
+  //   "**/*.tsx",
+  //   ".next/types/**/*.ts",
+  //   ".next/dev/types/**/*.ts",
+  //   "**/*.mts"
+  // ],
   "exclude": ["node_modules"]
 }

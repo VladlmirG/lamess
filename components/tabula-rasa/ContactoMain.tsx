@@ -20,7 +20,7 @@ export default function ContactoMain() {
             Atención directa, sin intermediarios. Escríbenos o llámanos y te responderemos lo antes posible.
           </p>
           <p className="text-xs text-foreground/60 font-montserrat">
-            Disponible de lunes a viernes · 8:00 – 18:00 | Sabados y Domingos . 6:00 - 20:00
+            Disponible de Lunes a Sabado · 6:00 – 20:00 | Domingos . 6:00 - 16:00
           </p>
         </div>
 

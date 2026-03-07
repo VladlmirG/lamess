@@ -66,7 +66,7 @@ export default function Navbar() {
       </DropdownMenu>
 
       <NavLink name="Nosotros" path="/nosotros" pathname={pathname} />
-      {/* <NavLink name="Calculador" path="/calculador" pathname={pathname} /> */}
+      <NavLink name="Calculador" path="/calculador" pathname={pathname} />
     </nav>
   );
 }

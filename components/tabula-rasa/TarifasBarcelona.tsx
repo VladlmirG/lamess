@@ -9,8 +9,8 @@ import { FaClock, FaExclamationCircle } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; // shadcn tooltip
-
+import Link from "next/link";
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 
 export default function TarifasBarcelona() {
   const zonas = [
@@ -268,45 +268,6 @@ useEffect(() => {
         </div>
 
 
-        {/* Example Calculation */}
-{/* <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/10 to-oliva/5 backdrop-blur-xl shadow-lg p-8 mb-16 font-montserrat">
-
-  <h3 className="text-lg md:text-xl font-gobold mb-6 tracking-wide">
-    Ejemplo de cálculo (Barcelona)
-  </h3>
-
-  <div className="space-y-4 text-sm md:text-base">
-
-    <div className="flex justify-between border-b border-foreground/20 pb-2">
-      <span>1 Recogida</span>
-      <span className="font-semibold">2€</span>
-    </div>
-
-    <div className="flex justify-between border-b border-foreground/20 pb-2">
-      <span>Entrega Zona 1</span>
-      <span className="font-semibold">5,5€</span>
-    </div>
-
-    <div className="flex justify-between border-b border-foreground/20 pb-2">
-      <span>Entrega Zona 3</span>
-      <span className="font-semibold">9€</span>
-    </div>
-
-    <div className="flex justify-between pt-4 text-lg font-bold">
-      <span>Total</span>
-      <span className="text-oliva-light">16,5€</span>
-    </div>
-
-  </div>
-
-  <p className="mt-6 text-xs md:text-sm text-muted-foreground">
-    En Barcelona, cada servicio incluye un coste fijo de recogida (2€) más el precio correspondiente a la zona de entrega.
-  </p>
-
-</div> */}
-
-
-
       {/* CTA */}
       <div className="rounded-3xl px-10 py-6 shadow-lg border border-foreground/40 bg-militar-dark">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -328,11 +289,16 @@ useEffect(() => {
             </div>
           </div>
 
+          <Link href="/calculador" >
+          <button className="calc-button text-xs lg:text-sm font-semibold">
+            Calcular (Barcelona)
+          </button>
+          </Link>
 
-        <TooltipProvider>
+
+        {/* <TooltipProvider>
           <Tooltip>
            <TooltipTrigger asChild>
-          {/* Right Side (Button) */}
           <button className="calc-button text-xs lg:text-sm font-semibold">
             Calcular (Barcelona)
           </button>
@@ -341,7 +307,7 @@ useEffect(() => {
              Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
           </TooltipContent>
             </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
         </div>
       </div>
 

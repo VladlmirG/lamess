@@ -4,6 +4,7 @@
 
 
 
+
 /* ---------------- FONT CLASSES ---------------- */
 .font-montserrat { font-family: var(--font-montserrat); }
 .font-delagothic { font-family: var(--font-dela-gothic); }
@@ -215,4 +216,15 @@ body{
 
 .calc-button:hover {
     box-shadow: 0 0 5px #B0D182, 0 0 10px #B0D182, 0 0 20px #B0D182, 0 0 40px #B0D182;
+}
+
+
+.custom-marker{
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  animation: markerDrop 0.4s ease;
+}
+
+@keyframes markerDrop{
+  0%{transform:translateY(-12px);opacity:0}
+  100%{transform:translateY(0);opacity:1}
 }

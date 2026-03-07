@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import FadeInSection from "./FadeInSection";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; // shadcn tooltip
+import Link from "next/link";
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 
 export default function Hero2() {
   const [isDark, setIsDark] = useState(false);
@@ -55,8 +56,15 @@ export default function Hero2() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+
+             <Link href="/calculador" >
+              <button className="px-6 py-3 prime-button font-montserrat font-bold cursor-pointer">
+                Calcular envío
+              </button>
+             </Link>
+
               {/* Tooltip button */}
-              <TooltipProvider>
+              {/* <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button className="px-6 py-3 prime-button font-montserrat font-bold cursor-pointer">
@@ -67,7 +75,7 @@ export default function Hero2() {
                     Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
 
             <a  href="#ciudades" className="px-6 py-3 second-button font-montserrat font-bold">
               Ver tarifas

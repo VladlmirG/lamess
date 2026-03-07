@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import FadeInSection from "./FadeInSection";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; // shadcn tooltip
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 
 export default function CityCard() {
   return (
@@ -40,7 +40,15 @@ export default function CityCard() {
             </h3>
 
             <div className="flex gap-3 mt-4">
-            <TooltipProvider>
+
+               <Link href="/calculador" >
+              <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva cursor-pointer">
+                Calcular envío
+              </button>
+              </Link>
+
+
+            {/* <TooltipProvider>
               <Tooltip>
                <TooltipTrigger asChild>
               <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva">
@@ -51,7 +59,8 @@ export default function CityCard() {
                     Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
+
               <Link href="/tarifas-madrid" scroll={true}>
               <button className="px-4 py-2 text-sm bg-militar/60 backdrop-blur text-hueso rounded-full  hover:bg-militar/80 transition font-montserrat cursor-pointer">
                 Ver tarifas
@@ -93,7 +102,8 @@ export default function CityCard() {
                 Ver tarifas
               </button>
               </Link>
-             <TooltipProvider>
+
+             {/* <TooltipProvider>
               <Tooltip>
                <TooltipTrigger asChild>
               <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva">
@@ -104,7 +114,13 @@ export default function CityCard() {
                     Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
+              </TooltipProvider> */}
+
+              <Link href="/calculador" >
+              <button className="px-4 py-2 text-sm bg-hueso text-militar-dark rounded-full hover:bg-hueso/90 transition font-medium font-montserrat border border-oliva cursor-pointer">
+                Calcular envío
+              </button>
+              </Link>
             </div>
 
           </div>

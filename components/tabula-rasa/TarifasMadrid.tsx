@@ -9,7 +9,8 @@ import { FaClock, FaExclamationCircle } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; // shadcn tooltip
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
+import Link from "next/link";
 
 
 export default function TarifasMadrid() {
@@ -285,10 +286,15 @@ useEffect(() => {
             </div>
           </div>
 
-        <TooltipProvider>
+          <Link href="/calculador" >
+          <button className="calc-button text-xs lg:text-sm font-semibold">
+            Calcular (Madrid)
+          </button>
+          </Link>
+
+        {/* <TooltipProvider>
           <Tooltip>
            <TooltipTrigger asChild>
-          {/* Right Side (Button) */}
           <button className="calc-button text-xs lg:text-sm font-semibold">
             Calcular (Madrid)
           </button>
@@ -297,7 +303,7 @@ useEffect(() => {
              Este servicio actualmente no está disponible debido a mantenimiento y mejoras.
           </TooltipContent>
             </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
 
         </div>
       </div>
