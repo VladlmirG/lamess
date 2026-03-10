@@ -10,6 +10,7 @@ import LogosCarousel from "@/components/tabula-rasa/LogosCarousel";
 import QueHacemos from "@/components/tabula-rasa/QueHacemos";
 import ReviewsCarousel from "@/components/tabula-rasa/ReviewsCarousel";
 import Ventajas from "@/components/tabula-rasa/Ventajas";
+import StatsCounter from "@/components/tabula-rasa/StatsCounter";
 
 export default function Home() {
   const { theme } = useTheme();
@@ -22,6 +23,7 @@ export default function Home() {
     <div>
       {/* <Hero/> */}
       <Hero2/>
+      <StatsCounter/>
       <CityCard/>
       <QueHacemos/>
 

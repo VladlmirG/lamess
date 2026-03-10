@@ -30,7 +30,7 @@ const NosotrosExpansion = () => {
         {/* LEFT SIDE - TEXT CARD */}
         <div className="w-full xl:w-[60%] flex flex-col justify-center">
           <div className="flex flex-col bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl rounded-3xl shadow-lg p-8 md:p-10 2xl:p-12">
-            <h3 className="text-xl lg:text-2xl xl:text-xl 2xl:text-2xl font-gobold tracking-wide mb-6">
+            <h3 className="text-xl lg:text-2xl xl:text-xl 2xl:text-2xl font-gobold mb-6 tracking-[0.2em] uppercase">
               Crecemos con la ciudad: Barcelona y Madrid
             </h3>
             <p className="font-montserrat text-foreground/80 leading-relaxed text-xs md:text-lg xl:text-sm 2xl:text-lg mb-4">
@@ -44,7 +44,7 @@ const NosotrosExpansion = () => {
 
         {/* RIGHT SIDE - ICON LIST */}
         <div className="w-full xl:w-[40%] flex flex-col gap-6">
-          <h4 className="text-xl lg:text-2xl xl:text-xl 2xl:text-2xl font-gobold mb-6">
+          <h4 className="text-xl lg:text-2xl xl:text-xl 2xl:text-2xl font-gobold mb-6 tracking-[0.2em] uppercase">
             Cómo trabajamos
           </h4>
           <ul className="flex flex-col gap-8">

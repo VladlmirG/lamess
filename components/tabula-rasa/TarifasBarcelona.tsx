@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FaClock, FaExclamationCircle } from "react-icons/fa";
+import { FaClock, FaExclamationCircle, FaBolt, FaCloudRain, FaWeightHanging } from "react-icons/fa";
 import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
@@ -187,6 +187,36 @@ useEffect(() => {
   </div>
 
 </div>
+
+{/* NUEVA CAJA: EXTRAS DE SERVICIO */}
+          <div className="group relative rounded-3xl border border-oliva-light/40  bg-militar-dark/90 p-8 shadow-2xl transition hover:border-oliva-light md:col-span-2 lg:columns-2xs">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="bg-oliva-light p-1.5 rounded-full">
+                <PiPackageLight className="text-2xl text-militar-dark" />
+              </div>
+              <h3 className="text-xl font-gobold tracking-wider uppercase text-hueso">Suplementos y extras</h3>
+            </div>
+            
+            <ul className="space-y-4 font-montserrat text-[11px] lg:text-xs">
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaBolt className="text-orange-500 text-lg shrink-0" />
+                <span><strong className="text-orange-500 uppercase">Express:</strong> +50% s/base</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaCloudRain className="text-blue-400 text-lg shrink-0" />
+                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> +30% s/base</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaClock className="text-yellow-300 text-lg shrink-0" />
+                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 0,20€/min</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
+                <span><strong className="text-slate-400 uppercase">Peso:</strong> +0,10€/kg <span className="text-[9px] opacity-60">(+30kg)</span></span>
+              </li>
+            </ul>
+          </div>
+
 
         </div>
 

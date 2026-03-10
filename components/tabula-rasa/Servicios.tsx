@@ -112,9 +112,12 @@ export default function ServiciosComponent() {
       <div className="mx-auto px-4 md:px-12 relative z-10">
         {/* Top title & paragraph */}
         <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl mb-4 font-peckhampress font-foreground tracking-wider">
-            Nuestros <span className="text-oliva-light text-stroke">Servicios</span>
+         <div className="text-center mb-4">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+            Nuestros <span className="text-oliva-light">servicios</span>
           </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
           <p className="text-muted-foreground text-sm md:text-lg max-w-3xl mx-auto font-montserrat tracking-wide">
             Logística urbana y soluciones complementarias para marcas y negocios.
           </p>

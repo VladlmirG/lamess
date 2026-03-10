@@ -81,9 +81,13 @@ export default function ReviewsCarousel() {
 
   {/* Section Header */}
   <div className="mx-auto text-center mb-20 px-4">
-    <h2 className="text-lg md:text-4xl text-foreground mb-4 font-peckhampress tracking-wider">
-      Lo que dicen nuestros <span className="text-oliva-light text-stroke">clientes</span>
-    </h2>
+
+        <div className="text-center mb-4">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+           Lo que dicen nuestros <span className="text-oliva-light">clientes</span>
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
     <p className="text-foreground/70 text-sm md:text-lg font-montserrat tracking-wide">
       Empresas y profesionales que confían en nuestro servicio de entrega sostenible.
     </p>

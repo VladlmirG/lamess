@@ -11,9 +11,12 @@ export default function CityCard() {
       
       {/* Title */}
       <div className="text-center max-w-2xl mx-auto">
-        <h1 className="text-2xl md:text-4xl tracking-wider font-peckhampress">
-          Elige tu  <span className="text-logo text-stroke">ciudad</span>
-        </h1>
+       <div className="text-center">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+            Elige tu <span className="text-oliva-light">ciudad</span>
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
         <p className="text-sm md:text-md text-foreground/70 mt-3 font-montserrat">
           Selecciona tu ciudad para descubrir nuestras tarifas flexibles y servicios de entrega personalizados, adaptados a rutas dentro y fuera de cada área urbana.
         </p>

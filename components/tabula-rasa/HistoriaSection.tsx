@@ -62,7 +62,7 @@ export default function HistoriaSection() {
                 />
               </div>
 
-              <h3 className="text-2xl md:text-5xl xl:text-4xl 2xl:text-5xl font-gobold mb-6 pb-0 xl:pb-6 2xl:pb-0  tracking-wide">
+              <h3 className="text-2xl md:text-5xl xl:text-4xl 2xl:text-5xl font-gobold mb-6 pb-0 xl:pb-6 2xl:pb-0  tracking-[0.2em] uppercase">
                 Qué hacemos
               </h3>
 
@@ -81,7 +81,7 @@ export default function HistoriaSection() {
             >
               {/* Timeline title */}
               <div className="mb-12 text-center lg:text-left">
-                <h3 className="text-2xl md:text-5xl xl:text-4xl 2xl:text-5xl font-gobold mb-6 pl-0 lg:pl-10 tracking-wide">
+                <h3 className="text-2xl md:text-5xl xl:text-4xl 2xl:text-5xl font-gobold mb-6 pl-0 lg:pl-10 tracking-[0.2em] uppercase">
                   Nuestra Historia
                 </h3>
               </div>
@@ -108,7 +108,7 @@ export default function HistoriaSection() {
                     <h4 className="text-lg font-semibold mb-2 font-montserrat">{item.title}</h4>
 
                     {/* Text */}
-                    <p className="text-foreground/80 leading-relaxed font-montserrat text-xs md:text-base max-w-3xl 2xl:max-w-full">{item.text}</p>
+                    <p className="text-foreground/80 leading-relaxed font-montserrat text-[9px] md:text-[11px] 2xl:text-base max-w-3xl 2xl:max-w-full">{item.text}</p>
                   </li>
                 ))}
               </ol>

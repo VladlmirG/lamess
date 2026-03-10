@@ -8,10 +8,12 @@ export default function ComoFunciona() {
       <div className="mx-auto px-4 md:px-12 max-w-6xl">
 
         {/* Title */}
-
-        <h1 className="text-3xl md:text-5xl text-center mb-25 font-gobold tracking-wider">
-          ¿ <span className="text-oliva-light text-stroke">Cómo</span> funciona?
-        </h1>
+        <div className="text-center mb-20 md:mb-30">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+             ¿ <span className="text-oliva-light">Cómo</span> funciona?
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
    
 
         {/* Connector line (desktop only) */}

@@ -68,7 +68,7 @@ const Footer: FC = () => {
               <span>Carrer Diputacion 469, Local 1, 08013, Barcelona</span>
             </Link>
 
-            <p>Te recomendamos la mejor opción por zonas, por horas o un servicio a medida.</p>
+            <p className="opacity-70">Te recomendamos la mejor opción por zonas, por horas o un servicio a medida.</p>
 
           </div>
 
@@ -122,13 +122,19 @@ const Footer: FC = () => {
        <div className="mt-18 xl:mt-12 relative flex justify-center gap-4 md:gap-8 font-montserrat text-xs md:text-sm tracking-wide">
 
          {/* Legal Links */}
-         <Link href="/aviso-legal" className="hover:text-oliva-light transition-colors">
+         {/* <div className="flex"> */}
+         <Link href="/aviso-legal" className="hover:text-oliva-light transition-colors text-[9px]">
            Aviso legal
          </Link>
 
-         <Link href="/condiciones-de-uso" className="hover:text-oliva-light transition-colors">
-           Condiciones de uso
+         <Link href="/politica-cookies" className="hover:text-oliva-light transition-colors text-[9px]">
+           Politicas de Cookies
          </Link>
+
+          <Link href="/politica-privacidad" className="hover:text-oliva-light transition-colors text-[9px]">
+           Politicas de privacidad
+         </Link>
+         {/* </div> */}
 
          {/* Scroll to Top Button with Tooltip */}
          <TooltipProvider>
@@ -136,7 +142,7 @@ const Footer: FC = () => {
            <TooltipTrigger asChild>
              <button
                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-               className="absolute right-0 xl:right-5 -top-6 w-8 h-8 xl:w-10 xl:h-10 bg-oliva-light text-militar rounded-full flex items-center justify-center shadow-md   hover:scale-105 transition-transform cursor-pointer"
+               className="absolute right-0 xl:right-5 -top-10 w-8 h-8 xl:w-10 xl:h-10 bg-oliva-light text-militar rounded-full flex items-center justify-center shadow-md   hover:scale-105 transition-transform cursor-pointer"
                aria-label="Scroll to top">
               <ArrowUp size={16} className="xl:w-5 xl:h-5" />
             </button>

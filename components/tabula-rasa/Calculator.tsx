@@ -362,7 +362,12 @@ export default function Calculator() {
     <TooltipProvider>
       <section className="max-w-380 mx-auto py-8 px-0 md:px-4">
         <div className="max-w-5xl mx-auto text-center mb-8">
-          <h2 className="text-2xl md:text-5xl font-bold mb-4 font-gobold tracking-wide"><span className="text-oliva-light">Calculador</span> de precio</h2>
+          <div className="text-center mb-4">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+            <span className="text-oliva-light">Calculador</span> de precio
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
           <p className="text-foreground/75 text-sm md:text-lg mb-2 font-montserrat">Calcula un precio estimado en segundos. Selecciona ciudad, origen, destino y detalles de la entrega.</p>
           <p className="text-xs text-foreground/60 font-montserrat">Disponible de Lunes a Sabado · 6:00 – 20:00 | Domingos . 6:00 - 16:00</p>
         </div>

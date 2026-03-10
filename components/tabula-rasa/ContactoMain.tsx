@@ -12,10 +12,14 @@ export default function ContactoMain() {
     <div>
       <section className="py-14 px-2 md:px-6">
         {/* Title & Subtitle Centered */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-2xl md:text-5xl font-bold mb-4 font-gobold tracking-wide">
+        <div className="max-w-6xl mx-auto text-center mb-16">
+          <div className="text-center mb-4">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
             <span className="text-oliva-light">Hablemos</span> de tu próximo envío
           </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
+
           <p className="text-foreground/75 text-sm md:text-lg mb-2 font-montserrat">
             Atención directa, sin intermediarios. Escríbenos o llámanos y te responderemos lo antes posible.
           </p>

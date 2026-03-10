@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import Footer from "@/components/tabula-rasa/Footer";
+import CookieBanner from "@/components/tabula-rasa/CookieBanner";
 
 
 /* ---------------- GOOGLE FONT ---------------- */
@@ -67,10 +68,38 @@ const smirnow = localFont({
   variable: "--font-smirnow",
 });
 
-/* ---------------- METADATA ---------------- */
+/* ---------------- METADATA OPTIMIZADA ---------------- */
 export const metadata: Metadata = {
-  title: "La Mess",
-  description: "Entregas directas entre profesionales en bicicleta de carga",
+  title: {
+    default: "La Mess | Logística Urbana Sostenible en Bicicleta de Carga",
+    template: "%s | La Mess",
+  },
+  description: "Mensajería urgente y logística de última milla en Madrid y Barcelona. Especialistas en entregas directas B2B con bicicletas de carga. Eficiencia eco-friendly.",
+  keywords: ["mensajería bicicleta carga", "logística sostenible", "reparto última milla", "cargo bikes Madrid", "mensajería ecológica Barcelona"],
+  authors: [{ name: "La Mess" }],
+  creator: "La Mess",
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    url: "https://www.lamess.es",
+    siteName: "La Mess",
+    title: "La Mess | Logística Urbana con Propósito",
+    description: "Entregas directas, cuidadas y sostenibles en Madrid y Barcelona mediante cargo bikes.",
+    images: [
+      {
+        url: "/og-image.jpg", // Asegúrate de subir esta imagen a /public
+        width: 1200,
+        height: 630,
+        alt: "La Mess Cargo Bikes",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "La Mess | Logística Urbana Sostenible",
+    description: "Mensajería profesional en bicicleta de carga.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 /* ---------------- ROOT LAYOUT ---------------- */
@@ -102,6 +131,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <Footer />
+
+          <CookieBanner/>
         </ThemeProvider> 
       </body>
     </html>

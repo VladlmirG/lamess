@@ -29,7 +29,7 @@ export default function NosotrosMisc1() {
 
         {/* LEFT SIDE: ICON LIST */}
         <div className="w-full xl:w-[40%] flex flex-col gap-1 md:gap-4 mt-0 ml-0 md:ml-4 xl-ml-0 xl:mt-5 2xl:mt-10">
-          <h3 className="text-xl md:text-4xl xl:text-2xl 2xl:text-5xl font-gobold mb-6 tracking-wide">
+          <h3 className="text-xl md:text-4xl xl:text-2xl 2xl:text-5xl font-gobold mb-6 tracking-[0.2em] uppercase">
             Entregas directas, menos errores
           </h3>
           <p className="text-foreground/80 font-montserrat tracking-wide leading-relaxed text-xs md:text-lg xl:text-sm 2xl:text-lg mb-12 max-w-x">

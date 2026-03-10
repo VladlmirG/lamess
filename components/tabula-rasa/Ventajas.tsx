@@ -8,10 +8,14 @@ export default function Ventajas() {
     <section className="w-full pt-5 pb-20 relative overflow-hidden">
       <div className="mx-auto px-4 md:px-12 relative">
 
-        {/* Title */}
-        <h2 className="text-2xl md:text-5xl text-center mb-15 font-gobold tracking-wider">
-          ¿Por qué en <span className="text-oliva-light text-stroke">bici</span> de carga?
-        </h2>
+
+
+        <div className="text-center mb-15">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+           ¿Por qué en <span className="text-oliva-light">bici</span> de carga?
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent mx-auto opacity-50"></div>
+        </div>
 
         <div className="relative grid xl:grid-cols-2 gap-16">
 

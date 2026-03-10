@@ -38,9 +38,12 @@ export default function TeamSection() {
 
             {/* TEXT SIDE */}
             <div className="w-full lg:w-[40%] text-center lg:text-left">
-              <h2 className="text-3xl md:text-5xl mb-6 font-gobold text-oliva-light text-stroke tracking-widest">
-                Nosotros
-              </h2>
+          <div className="mb-6 flex flex-col justify-center items-center lg:justify-start lg:items-start">
+          <h2 className="font-gobold text-2xl md:text-5xl xl:text-6xl tracking-[0.2em] uppercase mb-4">
+             Nosotros<span className="text-oliva-light"></span>
+          </h2>
+          <div className="h-1 w-32 bg-linear-to-r from-transparent via-oliva-light to-transparent opacity-50"></div>
+        </div>
 
               <p className="text-muted-foreground text-sm 2xl:text-lg leading-relaxed font-montserrat border-b-2 border-b-oliva pb-4">
                 <span className="font-bold">Somos La Mess!</span><br />
