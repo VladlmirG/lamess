@@ -29,7 +29,7 @@ export default function CityCard() {
         <div className="relative group/card grow w-full md:w-56 h-75 md:h-full transition-all duration-500 md:hover:w-full overflow-hidden rounded-2xl group-hover:[&:not(:hover)_.top-content]:opacity-0">
 
           <Image
-            src="/misc/Madrid.jpg"
+            src="/misc/madrid.jpg"
             alt="Madrid"
             fill
             className="object-cover transition-transform duration-500 group-hover/card:scale-105"
@@ -86,7 +86,7 @@ export default function CityCard() {
         <div className="relative group/card grow w-full md:w-56 h-75 md:h-full transition-all duration-500 md:hover:w-full overflow-hidden rounded-2xl group-hover:[&:not(:hover)_.top-content]:opacity-0">
 
           <Image
-            src="/misc/Barcelona.jpg"
+            src="/misc/barcelona.jpg"
             alt="Barcelona"
             fill
             className="object-cover transition-transform duration-500 group-hover/card:scale-105"
