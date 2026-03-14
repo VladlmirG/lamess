@@ -11,6 +11,7 @@ import QueHacemos from "@/components/tabula-rasa/QueHacemos";
 import ReviewsCarousel from "@/components/tabula-rasa/ReviewsCarousel";
 import Ventajas from "@/components/tabula-rasa/Ventajas";
 import StatsCounter from "@/components/tabula-rasa/StatsCounter";
+import Sponsors from "@/components/tabula-rasa/Sponsors";
 
 export default function Home() {
   const { theme } = useTheme();
@@ -66,6 +67,7 @@ export default function Home() {
 
       </section>
       {/* ===== END SHARED BLOCK ===== */}
+      <Sponsors/>
       <ReviewsCarousel/>
       <LogosCarousel/>
     </div>

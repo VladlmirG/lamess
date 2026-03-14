@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import FadeInSection from "./FadeInSection";
 import Link from "next/link";
@@ -9,8 +9,6 @@ export default function Hero2() {
   const [isDark, setIsDark] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -22,45 +20,18 @@ export default function Hero2() {
   }, []);
 
   // 3D Tilt Calculation
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
-    
-    // Get mouse position relative to the card
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
-    // Calculate rotation based on distance from center
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    // Max rotation of 15 degrees
     const rotateX = ((y - centerY) / centerY) * -15; 
     const rotateY = ((x - centerX) / centerX) * 15;
 
     setTilt({ x: rotateX, y: rotateY });
-  };
-
-  const handleInteraction = (index: number | null) => {
-    if (hoveredIndex === index) {
-      if (index !== null && videoRefs.current[index]) {
-        videoRefs.current[index]!.muted = true;
-      }
-      setHoveredIndex(null);
-      setTilt({ x: 0, y: 0 }); // Reset tilt
-      return;
-    }
-
-    if (hoveredIndex !== null && videoRefs.current[hoveredIndex]) {
-      videoRefs.current[hoveredIndex]!.muted = true;
-    }
-
-    setHoveredIndex(index);
-    if (index !== null && videoRefs.current[index]) {
-      const video = videoRefs.current[index];
-      video!.muted = false;
-      video!.play().catch(() => console.log("Audio blocked"));
-    }
   };
 
   const videos = [
@@ -123,18 +94,21 @@ export default function Hero2() {
                   <div 
                     key={idx} 
                     className="relative aspect-4/5 md:h-60 xl:h-90 2xl:h-115 w-full"
-                    onMouseMove={(e) => hoveredIndex === idx && handleMouseMove(e, idx)}
+                    onMouseMove={(e) => {
+                        if (hoveredIndex === idx) handleMouseMove(e);
+                    }}
+                    onMouseEnter={() => setHoveredIndex(idx)}
+                    onMouseLeave={() => {
+                        setHoveredIndex(null);
+                        setTilt({ x: 0, y: 0 });
+                    }}
                   >
                     <video
-                      ref={(el) => { videoRefs.current[idx] = el; }}
                       src={videos[idx].src}
                       autoPlay
                       loop
                       muted
                       playsInline
-                      onMouseEnter={() => handleInteraction(idx)}
-                      onMouseLeave={() => handleInteraction(null)}
-                      onClick={() => handleInteraction(idx)}
                       style={{
                         transform: hoveredIndex === idx 
                           ? `scale(1.15) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
@@ -153,18 +127,21 @@ export default function Hero2() {
                   <div 
                     key={idx} 
                     className="relative aspect-4/5 md:h-60 xl:h-90 2xl:h-115 w-full"
-                    onMouseMove={(e) => hoveredIndex === idx && handleMouseMove(e, idx)}
+                    onMouseMove={(e) => {
+                        if (hoveredIndex === idx) handleMouseMove(e);
+                    }}
+                    onMouseEnter={() => setHoveredIndex(idx)}
+                    onMouseLeave={() => {
+                        setHoveredIndex(null);
+                        setTilt({ x: 0, y: 0 });
+                    }}
                   >
                     <video
-                      ref={(el) => { videoRefs.current[idx] = el; }}
                       src={videos[idx].src}
                       autoPlay
                       loop
                       muted
                       playsInline
-                      onMouseEnter={() => handleInteraction(idx)}
-                      onMouseLeave={() => handleInteraction(null)}
-                      onClick={() => handleInteraction(idx)}
                       style={{
                         transform: hoveredIndex === idx 
                           ? `scale(1.15) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 

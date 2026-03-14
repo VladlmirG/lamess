@@ -22,11 +22,18 @@ export default function TeamSection() {
   );
 
   const team = [
-    { name: "Carlos Martínez", src: "/members/por1.jpg" },
-    { name: "Lucía Fernández", src: "/members/por2.jpg" },
-    { name: "Andrés López", src: "/members/por3.jpg" },
-    { name: "John Doe", src: "/members/por4.jpg" },
-    { name: "David Ruiz", src: "/members/por5.jpg" },
+    { name: "Alejandro", src: "/members/Alejandro.jpg" },
+    { name: "Isaac", src: "/members/Isaac.jpg" },
+    { name: "Kennet", src: "/members/Kennet.jpg" },
+    { name: "Kike", src: "/members/Kike.jpg" },
+    { name: "Lucas", src: "/members/Lucas.jpg" },
+    { name: "Lucia", src: "/members/Lucia.jpg" },
+    { name: "Papu", src: "/members/Papu.jpg" },
+    { name: "Raul", src: "/members/Raul.jpg" },
+    { name: "Sair", src: "/members/Sair.jpg" },
+    { name: "Santi", src: "/members/Santi.jpg" },
+    { name: "Santiago", src: "/members/Santiago.jpg" },
+    { name: "Side", src: "/members/Side.jpg" },
   ];
 
   return (
