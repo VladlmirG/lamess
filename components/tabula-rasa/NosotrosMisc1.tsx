@@ -54,7 +54,7 @@ export default function NosotrosMisc1() {
           <div className="flex flex-col md:flex-row bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl rounded-3xl shadow-lg overflow-hidden">
             <div className=" md:w-1/2 relative h-64 md:h-auto">
               <Image
-                src="/misc/entregas.jpg"
+                src="/misc/entregas2.jpg"
                 alt="Compromiso y servicio"
                 fill
                 className="object-cover"
