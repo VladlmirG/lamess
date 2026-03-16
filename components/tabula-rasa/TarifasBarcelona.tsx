@@ -109,8 +109,117 @@ useEffect(() => {
           </p>
         </div>
 
+                {/* Zonas Table */}
+        <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl shadow-xl overflow-hidden mb-10">
+
+          {/* Header Area */}
+          <div className="p-6 md:p-10 border-b border-b-foreground/60 flex items-center gap-6 font-montserrat">
+            <div className="rounded-xl bg-primary/10 text-primary">
+              <PiHandCoinsFill className="text-4xl md:text-5xl text-militar-dark bg-oliva-light p-2 rounded-full"/>
+            </div>
+<div className="flex items-start justify-between w-full gap-4">
+
+  <div>
+    <h3 className="text-md md:text-xl font-gobold">
+      Tarifas por zona
+    </h3>
+    <p className="text-[9px] md:text-sm text-muted-foreground">
+      Precios según código postal
+    </p>
+  </div>
+
+  <span className="text-[9px] md:text-xs font-semibold whitespace-nowrap mt-5">
+    +2€ recogida única
+  </span>
+
+</div>
+          </div>
+
+          <div className="overflow-x-auto font-montserrat">
+            <Table className="text-[8px] md:text-[10px] lg:text-sm text-center">
+              <TableHeader>
+                <TableRow className="bg-militar-dark">
+                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Zona</TableHead>
+                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Laborables</TableHead>
+                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Festivos</TableHead>
+                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light">Códigos postales</TableHead>
+                </TableRow>
+              </TableHeader> 
+
+              <TableBody>
+                {zonas.map((z, i) => (
+                  <TableRow key={i} className="hover:bg-muted/40 transition">
+                    <TableCell className="px-4 py-3 md:px-8 md:py-6 font-medium text-[8px] md:text-[10px] lg:text-base bg-militar-dark text-oliva-light">{z.zona}</TableCell>
+                    <TableCell className="px-4 py-3 md:px-8 md:py-6 text-[8px] md:text-[10px] lg:text-base">{z.lab}</TableCell>
+                    <TableCell className="px-4 py-3 md:px-8 md:py-6 text-[8px] md:text-[10px] lg:text-base">{z.fes}</TableCell>
+
+                    {/* Accordion inside TableCell */}
+                    <TableCell className="px-4 py-3 md:px-8 md:py-6">
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value={`item-${i}`}>
+                          <AccordionTrigger className="p-0 font-medium hover:no-underline hover:text-foreground/60 text-[8px] md:text-[10px] lg:text-base cursor-pointer">
+                            Ver códigos
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="rounded-xl bg-muted/30 mt-2">
+                              <ScrollArea className="h-full pr-4">
+                                <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
+                                  {z.codes.map((code) => (
+                                    <span
+                                      key={code}
+                                      className="px-1 lg:px-3 py-1 rounded-md bg-militar-dark text-oliva-light border-0 md:border border-oliva-light/40 text-[7px] md:text-[8px] lg:text-xs"
+                                    >
+                                      {code}
+                                    </span>
+                                  ))}
+                                </div>
+                              </ScrollArea>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+
+
+        {/* NUEVA CAJA: EXTRAS DE SERVICIO */}
+          <div className="group relative rounded-3xl border border-oliva-light/40  bg-militar-dark/90 p-8 shadow-2xl transition hover:border-oliva-light md:col-span-2 lg:columns-2xs">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="bg-oliva-light p-1.5 rounded-full">
+                <PiPackageLight className="text-2xl text-militar-dark" />
+              </div>
+              <h3 className="text-xl font-gobold tracking-wider uppercase text-hueso">Suplementos y extras</h3>
+            </div>
+            
+            <ul className="space-y-4 font-montserrat text-[11px] lg:text-xs">
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaBolt className="text-orange-500 text-lg shrink-0" />
+                <span><strong className="text-orange-500 uppercase">Express:</strong> +50% s/base</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaCloudRain className="text-blue-400 text-lg shrink-0" />
+                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> +30% s/base</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaClock className="text-yellow-300 text-lg shrink-0" />
+                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 0,20€/min</span>
+              </li>
+              <li className="flex items-center gap-3 text-hueso/90">
+                <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
+                <span><strong className="text-slate-400 uppercase">Peso:</strong> +0,10€/kg <span className="text-[9px] opacity-60">(+30kg)</span></span>
+              </li>
+            </ul>
+          </div>
+
+
+
         {/* Top Cards */}
-        <div className="grid md:grid-cols-2 gap-10 mb-20">
+        <div className="grid md:grid-cols-2 gap-10 my-10">
 
           {/* Tarifa por hora */}
           <div className="group relative rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl p-10 shadow-sm transition hover:shadow-xl">
@@ -188,114 +297,12 @@ useEffect(() => {
 
 </div>
 
-{/* NUEVA CAJA: EXTRAS DE SERVICIO */}
-          <div className="group relative rounded-3xl border border-oliva-light/40  bg-militar-dark/90 p-8 shadow-2xl transition hover:border-oliva-light md:col-span-2 lg:columns-2xs">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="bg-oliva-light p-1.5 rounded-full">
-                <PiPackageLight className="text-2xl text-militar-dark" />
-              </div>
-              <h3 className="text-xl font-gobold tracking-wider uppercase text-hueso">Suplementos y extras</h3>
-            </div>
-            
-            <ul className="space-y-4 font-montserrat text-[11px] lg:text-xs">
-              <li className="flex items-center gap-3 text-hueso/90">
-                <FaBolt className="text-orange-500 text-lg shrink-0" />
-                <span><strong className="text-orange-500 uppercase">Express:</strong> +50% s/base</span>
-              </li>
-              <li className="flex items-center gap-3 text-hueso/90">
-                <FaCloudRain className="text-blue-400 text-lg shrink-0" />
-                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> +30% s/base</span>
-              </li>
-              <li className="flex items-center gap-3 text-hueso/90">
-                <FaClock className="text-yellow-300 text-lg shrink-0" />
-                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 0,20€/min</span>
-              </li>
-              <li className="flex items-center gap-3 text-hueso/90">
-                <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
-                <span><strong className="text-slate-400 uppercase">Peso:</strong> +0,10€/kg <span className="text-[9px] opacity-60">(+30kg)</span></span>
-              </li>
-            </ul>
-          </div>
+
 
 
         </div>
 
-        {/* Zonas Table */}
-        <div className="rounded-3xl border border-foreground/40 bg-linear-to-br from-oliva/20 to-oliva/5 backdrop-blur-xl shadow-xl overflow-hidden mb-10">
 
-          {/* Header Area */}
-          <div className="p-6 md:p-10 border-b border-b-foreground/60 flex items-center gap-6 font-montserrat">
-            <div className="rounded-xl bg-primary/10 text-primary">
-              <PiHandCoinsFill className="text-4xl md:text-5xl text-militar-dark bg-oliva-light p-2 rounded-full"/>
-            </div>
-<div className="flex items-start justify-between w-full gap-4">
-
-  <div>
-    <h3 className="text-md md:text-xl font-gobold">
-      Tarifas por zona
-    </h3>
-    <p className="text-[9px] md:text-sm text-muted-foreground">
-      Precios según código postal
-    </p>
-  </div>
-
-  <span className="text-[9px] md:text-xs font-semibold whitespace-nowrap mt-5">
-    +2€ recogida única
-  </span>
-
-</div>
-          </div>
-
-          <div className="overflow-x-auto font-montserrat">
-            <Table className="text-[8px] md:text-[10px] lg:text-sm text-center">
-              <TableHeader>
-                <TableRow className="bg-militar-dark">
-                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Zona</TableHead>
-                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Laborables</TableHead>
-                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light text-center">Festivos</TableHead>
-                  <TableHead className="px-4 py-3 md:px-8 md:py-5 font-semibold uppercase text-oliva-light">Códigos postales</TableHead>
-                </TableRow>
-              </TableHeader> 
-
-              <TableBody>
-                {zonas.map((z, i) => (
-                  <TableRow key={i} className="hover:bg-muted/40 transition">
-                    <TableCell className="px-4 py-3 md:px-8 md:py-6 font-medium text-[8px] md:text-[10px] lg:text-base bg-militar-dark text-oliva-light">{z.zona}</TableCell>
-                    <TableCell className="px-4 py-3 md:px-8 md:py-6 text-[8px] md:text-[10px] lg:text-base">{z.lab}</TableCell>
-                    <TableCell className="px-4 py-3 md:px-8 md:py-6 text-[8px] md:text-[10px] lg:text-base">{z.fes}</TableCell>
-
-                    {/* Accordion inside TableCell */}
-                    <TableCell className="px-4 py-3 md:px-8 md:py-6">
-                      <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value={`item-${i}`}>
-                          <AccordionTrigger className="p-0 font-medium hover:no-underline hover:text-foreground/60 text-[8px] md:text-[10px] lg:text-base cursor-pointer">
-                            Ver códigos
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <div className="rounded-xl bg-muted/30 mt-2">
-                              <ScrollArea className="h-full pr-4">
-                                <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
-                                  {z.codes.map((code) => (
-                                    <span
-                                      key={code}
-                                      className="px-1 lg:px-3 py-1 rounded-md bg-militar-dark text-oliva-light border-0 md:border border-oliva-light/40 text-[7px] md:text-[8px] lg:text-xs"
-                                    >
-                                      {code}
-                                    </span>
-                                  ))}
-                                </div>
-                              </ScrollArea>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
 
 
       {/* CTA */}
