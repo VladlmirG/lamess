@@ -48,6 +48,15 @@ export default function MobileNav() {
               {link.name}
             </Link>
           ))}
+
+          {/* Registro público: enlaza a la app (dominio externo → <a>).
+              En móvil no hay botón de Contacto (es un link más), así que este
+              CTA usa prime-button y queda como la acción destacada del menú. */}
+          <a href="https://app.lamess.es/registro" className="mt-4">
+            <button className="prime-button px-6 py-3 font-bold">
+              Hazte cliente
+            </button>
+          </a>
         </nav>
       </SheetContent>
     </Sheet>
