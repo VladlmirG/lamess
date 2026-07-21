@@ -47,15 +47,24 @@ export default function Header() {
         {/* Desktop Nav */}
         <div className="hidden xl:flex items-center gap-6">
           <Navbar />
-          <Link href="/contacto">
-          <button
-              className={`prime-button px-6 py-3 font-bold ${
-                pathname === "/contacto" ? "prime-button-hover" : ""
-              }`}
-            >
-              Contacto
-            </button>
+          {/* Contacto pasa a link normal (mismo estilo que el resto de la nav) y
+              "Hazte cliente" hereda el prime-button como CTA final: el botón se
+              lo lleva la conversión. Enlaza a la app (dominio externo → <a>). */}
+          <Link
+            href="/contacto"
+            className={`font-montserrat capitalize font-medium transition-colors duration-200 ${
+              pathname === "/contacto"
+                ? "text-active-link underline underline-offset-4"
+                : "text-foreground hover:text-hover-link"
+            }`}
+          >
+            Contacto
           </Link>
+          <a href="https://app.lamess.es/registro">
+            <button className="prime-button px-6 py-3 font-bold">
+              Hazte cliente
+            </button>
+          </a>
           <ThemeToggle />
         </div>
 
