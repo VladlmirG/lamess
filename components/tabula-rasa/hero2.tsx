@@ -82,6 +82,10 @@ export default function Hero2() {
                 Ver tarifas
               </a>
             </div>
+            {/* 21-oct · INC-0020 · Para los que ya son clientes: se pide desde la app. */}
+            <a href="https://app.lamess.es/login" className="-mt-6 font-montserrat text-sm xl:text-base font-bold text-accent underline-offset-4 hover:underline">
+              ¿Ya eres cliente? Entra en la app →
+            </a>
           </div>
 
           {/* RIGHT SIDE */}

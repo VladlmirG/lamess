@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import MobileNav from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 import { usePathname } from "next/navigation";
+import { LogIn } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden xl:flex items-center gap-6">
+        <div className="hidden xl:flex items-center gap-4 min-[1440px]:gap-6">
           <Navbar />
           {/* Contacto pasa a link normal (mismo estilo que el resto de la nav) y
               "Hazte cliente" hereda el prime-button como CTA final: el botón se
@@ -60,6 +61,14 @@ export default function Header() {
           >
             Contacto
           </Link>
+          {/* 21-oct · INC-0020 · Los clientes piden desde la app: «Entrar», a la vista. */}
+          <a
+            href="https://app.lamess.es/login"
+            className="second-button inline-flex items-center gap-2 px-5 py-[10px] font-montserrat font-bold text-sm"
+          >
+            <LogIn className="w-4 h-4" aria-hidden="true" />
+            Entrar
+          </a>
           <a href="https://app.lamess.es/registro">
             <button className="prime-button px-6 py-3 font-bold">
               Hazte cliente

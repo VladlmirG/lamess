@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'Calcula el Coste de tu Envío | La Mess',
-  description: 'Usa nuestra calculadora de envíos para obtener un presupuesto instantáneo en Madrid o Barcelona. Introduce origen y destino y obtén el mejor precio eco.',
+  description: 'Calcula el precio de tu envío en bicicleta de carga en Barcelona o Madrid: el mismo que te cobraremos, con las tarifas de nuestra app.',
   keywords: 'calculadora envíos, presupuesto mensajería online, precio transporte urgente, estimador tarifas reparto',
 };
 

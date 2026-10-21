@@ -1,0 +1,106 @@
+/* 21-oct · INC-0020 · «¿Cómo se pide?», la franja de clientes y las preguntas
+   frecuentes de la página de inicio. Prefijo lmi- para no tocar nada más. */
+
+.lmi {
+  --lmi-sub: #4d5544;
+  --lmi-line: rgba(28, 35, 21, 0.22);
+  --lmi-acento: #45682E;
+  --lmi-paso1: rgba(176, 209, 130, 0.25);
+  --lmi-paso2: rgba(176, 209, 130, 0.5);
+  --lmi-paso3: rgba(176, 209, 130, 0.75);
+  font-family: var(--font-montserrat, system-ui), system-ui, sans-serif;
+}
+html.dark .lmi {
+  --lmi-sub: #c3cbb8;
+  --lmi-line: rgba(244, 241, 234, 0.22);
+  --lmi-acento: #B0D182;
+  --lmi-paso1: rgba(176, 209, 130, 0.12);
+  --lmi-paso2: rgba(176, 209, 130, 0.24);
+  --lmi-paso3: rgba(176, 209, 130, 0.38);
+}
+.lmi *, .lmi *::before, .lmi *::after { box-sizing: border-box; }
+.lmi :focus-visible { outline: 3px solid var(--lmi-acento); outline-offset: 3px; }
+
+.lmi-como { max-width: 1240px; margin: 128px auto; display: flex; flex-direction: column; gap: 56px; }
+.lmi-cabecera { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.lmi-h2 { margin: 0; font-family: var(--font-gobold, sans-serif), sans-serif; font-weight: 400; font-size: clamp(30px, 5vw, 60px); line-height: 1; letter-spacing: 0.2em; text-transform: uppercase; }
+.lmi-h2 span { color: var(--lmi-acento); }
+.lmi-raya { display: block; width: 128px; height: 4px; background: linear-gradient(90deg, transparent, var(--lmi-acento), transparent); opacity: 0.6; }
+.lmi-intro { margin: 0; max-width: 640px; font-size: 18px; line-height: 1.5; color: var(--lmi-sub); }
+
+.lmi-pasos { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+.lmi-paso { position: relative; padding: 52px 22px 22px; border-radius: 28px; display: flex; flex-direction: column; gap: 14px; background: var(--lmi-paso1); }
+.lmi-paso:nth-child(2) { background: var(--lmi-paso2); }
+.lmi-paso:nth-child(3) { background: var(--lmi-paso3); }
+.lmi-paso:nth-child(4) { background: #B0D182; color: #1C2315; }
+.lmi-num { position: absolute; top: -26px; left: 22px; width: 56px; height: 56px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #2C3822; color: #F4F1EA; font-family: var(--font-gobold, sans-serif), sans-serif; font-size: 28px; box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.5); }
+.lmi-paso h3 { margin: 0; font-size: 19px; font-weight: 800; }
+.lmi-paso p { margin: 0; font-size: 14px; line-height: 1.5; }
+.lmi-enlace { font-size: 13px; font-weight: 800; color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Las miniaturas de la app dentro de cada paso (decorativas). */
+.lmi-mini { margin-top: auto; padding: 14px; border-radius: 16px; background: #F4F1EA; color: #1C2315; box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+.lmi-mini[data-oscura="1"] { background: #1C2315; color: #F4F1EA; gap: 7px; }
+.lmi-mini-titulo { font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #45682E; }
+.lmi-mini[data-oscura="1"] .lmi-mini-titulo { color: #B0D182; }
+.lmi-mini-campo { height: 30px; border-radius: 8px; border: 1px solid rgba(28, 35, 21, 0.2); padding: 0 10px; display: flex; align-items: center; }
+.lmi-mini-boton { height: 32px; border-radius: 999px; background: #45682E; color: #F4F1EA; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.lmi-mini[data-oscura="1"] .lmi-mini-boton { background: #B0D182; color: #1C2315; height: 30px; }
+.lmi-mini-correo { flex-direction: row; gap: 10px; align-items: flex-start; }
+.lmi-mini-icono { width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; background: #45682E; color: #F4F1EA; }
+.lmi-mini-correo strong { display: block; font-size: 12.5px; }
+.lmi-mini-correo small { display: block; margin-top: 3px; font-size: 11.5px; line-height: 1.4; color: #4d5544; }
+.lmi-mini-punto { display: flex; align-items: center; gap: 8px; }
+.lmi-mini-punto i { width: 18px; height: 18px; border-radius: 50%; font-style: normal; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; background: #B0D182; color: #1C2315; }
+.lmi-mini-punto i[data-r="1"] { background: #F4F1EA; }
+.lmi-mini-precio { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+.lmi-mini-precio span { color: #c9d1bf; }
+.lmi-mini-precio strong { font-size: 15px; }
+.lmi-mini-barras { display: flex; gap: 6px; }
+.lmi-mini-barras i { flex: 1; height: 6px; border-radius: 999px; background: #45682E; }
+.lmi-mini-barras i:last-child { background: rgba(28, 35, 21, 0.15); }
+.lmi-mini-estados { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; }
+.lmi-mini-estados span:last-child { color: #6b7263; }
+.lmi-mini-aviso { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 10px; background: rgba(176, 209, 130, 0.35); font-weight: 700; }
+.lmi-mini-aviso svg { flex-shrink: 0; }
+
+/* ¿Ya eres cliente? */
+.lmi-franja { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 28px 32px; border-radius: 28px; background: #1C2315; color: #F4F1EA; border: 1px solid rgba(176, 209, 130, 0.45); }
+.lmi-franja h3 { margin: 0; font-family: var(--font-gobold, sans-serif), sans-serif; font-weight: 400; font-size: 30px; letter-spacing: 0.12em; text-transform: uppercase; }
+.lmi-franja p { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: #c9d1bf; }
+.lmi-franja p strong { color: #F4F1EA; }
+.lmi-franja-botones { display: flex; gap: 12px; flex-wrap: wrap; }
+.lmi-cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #B0D182; color: #1C2315; text-decoration: none; font-weight: 800; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+.lmi-cta:hover { background: #c4dd9f; }
+.lmi-cta2 { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; border-radius: 999px; border: 2px solid #B0D182; color: #B0D182; text-decoration: none; font-weight: 700; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+.lmi-cta2:hover { background: rgba(176, 209, 130, 0.12); }
+.lmi-franja :focus-visible { outline-color: #B0D182; }
+
+/* Preguntas frecuentes */
+.lmi-preguntas { max-width: 960px; margin: 96px auto 32px; display: flex; flex-direction: column; gap: 28px; }
+.lmi-preguntas .lmi-h2 { font-size: clamp(26px, 4vw, 44px); letter-spacing: 0.18em; text-align: center; }
+.lmi-lista { border-top: 1px solid var(--lmi-line); }
+.lmi-pregunta { border-bottom: 1px solid var(--lmi-line); }
+.lmi-pregunta summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 4px; font-size: 17px; font-weight: 700; cursor: pointer; }
+.lmi-pregunta summary::-webkit-details-marker { display: none; }
+.lmi-mas { flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--lmi-line); display: inline-flex; align-items: center; justify-content: center; font-size: 18px; transition: transform 0.2s; }
+.lmi-pregunta[open] .lmi-mas { transform: rotate(45deg); }
+.lmi-pregunta p { margin: 0; padding: 0 4px 22px; max-width: 760px; font-size: 15.5px; line-height: 1.6; color: var(--lmi-sub); }
+.lmi-pregunta p a { color: var(--lmi-acento); font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .lmi-pasos { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; }
+}
+@media (max-width: 640px) {
+  .lmi-como { margin: 80px auto; gap: 44px; }
+  .lmi-intro { font-size: 15.5px; }
+  .lmi-pasos { grid-template-columns: minmax(0, 1fr); row-gap: 44px; }
+  .lmi-franja { padding: 22px 18px; }
+  .lmi-franja h3 { font-size: 24px; }
+  .lmi-franja-botones, .lmi-franja-botones a { width: 100%; }
+  .lmi-preguntas { margin-top: 64px; }
+  .lmi-pregunta summary { font-size: 15.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lmi-mas { transition: none; }
+}

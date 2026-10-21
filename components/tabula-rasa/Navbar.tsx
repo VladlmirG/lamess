@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronDown } from "react-icons/fa";
+import { CAMPANAS_PUBLICAS } from "@/lib/campanas";
 
 import {
   DropdownMenu,
@@ -19,10 +20,12 @@ export default function Navbar() {
     pathname === "/tarifas-madrid";
 
   return (
-    <nav className="hidden md:flex gap-8 items-center">
+    <nav className="hidden md:flex gap-[22px] min-[1440px]:gap-8 items-center">
       
       <NavLink name="Inicio" path="/" pathname={pathname} />
       <NavLink name="Servicios" path="/servicios" pathname={pathname} />
+      {/* 21-oct · INC-0020 · Campañas: solo cuando sea pública (ver lib/campanas). */}
+      {CAMPANAS_PUBLICAS && <NavLink name="Campañas" path="/campanas" pathname={pathname} />}
 
       {/* Tarifas Dropdown (3rd position) */}
       <DropdownMenu>

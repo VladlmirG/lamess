@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { CAMPANAS_PUBLICAS } from '@/lib/campanas'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.lamess.es'
@@ -47,5 +48,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    // 21-oct · INC-0020 · Campañas: solo cuando sea pública (ver lib/campanas).
+    ...(CAMPANAS_PUBLICAS
+      ? [{ url: `${baseUrl}/campanas`, lastModified, changeFrequency: 'monthly' as const, priority: 0.7 }]
+      : []),
   ]
 }

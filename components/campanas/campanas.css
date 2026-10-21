@@ -1,0 +1,84 @@
+/* 21-oct · INC-0020 · La página de campañas. Prefijo lmk- para no tocar nada más. */
+
+.lmk {
+  --lmk-sub: #4d5544;
+  --lmk-acento: #45682E;
+  font-family: var(--font-montserrat, system-ui), system-ui, sans-serif;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 0 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+html.dark .lmk { --lmk-sub: #c3cbb8; --lmk-acento: #B0D182; }
+.lmk *, .lmk *::before, .lmk *::after { box-sizing: border-box; }
+.lmk :focus-visible { outline: 3px solid var(--lmk-acento); outline-offset: 4px; }
+
+.lmk-aviso { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 16px 0 0; padding: 10px 16px; border-radius: 14px; background: #fbbf24; color: #1C2315; font-size: 13px; font-weight: 700; text-align: center; }
+.lmk-aviso svg { flex-shrink: 0; }
+
+.lmk-cabecera { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding-top: 40px; }
+.lmk-antetitulo { font-family: var(--font-gobold, sans-serif), sans-serif; font-size: 20px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--lmk-acento); }
+.lmk-h1 { margin: 0; max-width: 900px; font-family: var(--font-peckham-press, sans-serif), sans-serif; font-weight: 400; font-size: clamp(24px, 4.2vw, 50px); line-height: 1.1; letter-spacing: 0.04em; text-transform: uppercase; }
+.lmk-intro { margin: 0; max-width: 680px; font-size: 18px; line-height: 1.5; color: var(--lmk-sub); }
+
+/* Tarjetas de vídeo, con un poco de inclinación al pasar el ratón. */
+.lmk-marco { position: relative; perspective: 1200px; }
+.lmk-marco[data-grande="1"] { aspect-ratio: 16 / 7; }
+.lmk-marco[data-grande="0"] { aspect-ratio: 9 / 16; }
+.lmk-tarjeta { position: absolute; inset: 0; padding: 0; border: none; border-radius: 24px; overflow: hidden; cursor: pointer; background: #24301c; color: #F4F1EA; text-align: left; font-family: inherit; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--escala, 1)); transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s; box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.7); will-change: transform; }
+.lmk-marco[data-grande="1"] .lmk-tarjeta { border-radius: 28px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
+.lmk-marco[data-activa="1"] .lmk-tarjeta { --escala: 1.03; transition: transform 0.12s ease-out, box-shadow 0.3s; box-shadow: 0 34px 60px -24px rgba(0, 0, 0, 0.8); }
+.lmk-tarjeta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lmk-velo { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 13, 8, 0.92) 0%, rgba(10, 13, 8, 0.25) 45%, rgba(10, 13, 8, 0) 70%); }
+.lmk-marco[data-grande="1"] .lmk-velo { background: linear-gradient(to top, rgba(10, 13, 8, 0.9) 0%, rgba(10, 13, 8, 0.2) 50%, rgba(10, 13, 8, 0.1) 100%); }
+.lmk-etiqueta { position: absolute; top: 14px; left: 14px; padding: 4px 10px; border-radius: 999px; background: rgba(15, 20, 12, 0.6); border: 1px solid rgba(244, 241, 234, 0.2); font-size: 11px; font-weight: 700; }
+.lmk-play { position: absolute; left: 50%; top: 44%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(176, 209, 130, 0.92); color: #1C2315; }
+.lmk-marco[data-grande="1"] .lmk-play { top: 50%; width: 92px; height: 92px; margin: -46px 0 0 -46px; box-shadow: 0 0 0 10px rgba(176, 209, 130, 0.25); }
+.lmk-pie { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
+.lmk-pie strong { font-family: var(--font-gobold, sans-serif), sans-serif; font-weight: 400; font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.05; }
+.lmk-pie span { font-size: 13px; color: #d4dccb; }
+.lmk-marco[data-grande="1"] .lmk-pie { left: 28px; right: 28px; bottom: 24px; gap: 6px; }
+.lmk-marco[data-grande="1"] .lmk-pie strong { font-size: clamp(26px, 3.4vw, 40px); letter-spacing: 0.08em; }
+.lmk-marco[data-grande="1"] .lmk-pie span { font-size: 15px; }
+.lmk-rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+
+/* ¿Hacemos la tuya? */
+.lmk-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 30px 34px; border-radius: 28px; background: #B0D182; color: #1C2315; }
+.lmk-cta h2 { margin: 0; font-family: var(--font-gobold, sans-serif), sans-serif; font-weight: 400; font-size: clamp(26px, 3vw, 36px); letter-spacing: 0.12em; text-transform: uppercase; }
+.lmk-cta p { margin: 6px 0 0; font-size: 15.5px; }
+.lmk-cta-botones { display: flex; gap: 12px; flex-wrap: wrap; }
+.lmk-boton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #1C2315; color: #F4F1EA; text-decoration: none; font-weight: 800; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+.lmk-boton2 { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 24px; border-radius: 999px; border: 2px solid #1C2315; color: #1C2315; text-decoration: none; font-weight: 800; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+.lmk-cta :focus-visible { outline-color: #1C2315; }
+
+/* El reproductor */
+.lmk-fondo { position: fixed; inset: 0; z-index: 80; background: rgba(10, 13, 8, 0.88); display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+.lmk-dialogo { width: min(420px, 100%); max-height: 100%; display: flex; flex-direction: column; gap: 14px; color: #F4F1EA; }
+.lmk-dialogo-cabecera { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.lmk-dialogo-cabecera strong { font-family: var(--font-gobold, sans-serif), sans-serif; font-weight: 400; font-size: 26px; letter-spacing: 0.08em; text-transform: uppercase; }
+.lmk-cerrar { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; border: 1px solid rgba(244, 241, 234, 0.3); background: transparent; color: #F4F1EA; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.lmk-cerrar:focus-visible { outline: 3px solid #B0D182; outline-offset: 3px; }
+.lmk-video { width: 100%; max-height: calc(100vh - 160px); aspect-ratio: 9 / 16; border-radius: 22px; background: #000; object-fit: contain; }
+.lmk-dialogo > span { font-size: 14px; color: #c9d1bf; }
+
+@media (max-width: 640px) {
+  .lmk { gap: 24px; padding-bottom: 56px; }
+  .lmk-cabecera { padding-top: 20px; }
+  .lmk-antetitulo { font-size: 15px; }
+  .lmk-intro { font-size: 15.5px; }
+  .lmk-marco[data-grande="1"] { aspect-ratio: 4 / 5; }
+  .lmk-rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .lmk-tarjeta { border-radius: 18px; }
+  .lmk-play { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
+  .lmk-pie { left: 10px; right: 10px; bottom: 10px; }
+  .lmk-pie strong { font-size: 17px; }
+  .lmk-pie span { font-size: 11px; }
+  .lmk-etiqueta { top: 10px; left: 10px; font-size: 10px; }
+  .lmk-cta { padding: 22px 18px; }
+  .lmk-cta-botones, .lmk-cta-botones a { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lmk-tarjeta { transition: none; transform: none; }
+}

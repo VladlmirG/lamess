@@ -10,40 +10,17 @@ import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
 import Link from "next/link";
+import { precioCorto, type FilaZona } from "@/lib/tarifasPagina";
+import { TARIFA_HORA } from "@/lib/precio";
 // import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 
-export default function TarifasBarcelona() {
-  const zonas = [
-    {
-      zona: "Zona 1",
-      lab: "5,5€",
-      fes: "9€",
-      codes: [
-        "08006", "08007", "08008", "08009", "08010",
-        "08011", "08012", "08013", "08021", "08025",
-        "08036", "08037",
-      ],
-    },
-    {
-      zona: "Zona 2",
-      lab: "7,5€",
-      fes: "11€",
-      codes: ["08001", "08002", "08003", "08015", "08018", "08026", "08029"],
-    },
-    {
-      zona: "Zona 3",
-      lab: "9€",
-      fes: "12€",
-      codes: ["08004", "08005", "08014", "08016", "08019", "08020"],
-    },
-    {
-      zona: "Zona 4",
-      lab: "10€",
-      fes: "13€",
-      codes: ["08017", "08022", "08023", "08024", "08031", "08032"],
-    },
-  ];
-
+// 21-oct · INC-0020 · Las zonas y precios llegan de la página, que los lee de la
+// app (lib/tarifas): los mismos que el calculador y que la app al pedir.
+export default function TarifasBarcelona({ zonas }: { zonas: FilaZona[] }) {
+  // El ejemplo de cálculo: recogida + una entrega en la primera zona y otra en la tercera.
+  const vacia: FilaZona = { zona: "Zona", lab: "—", fes: "—", codes: [], laborable: 0, festivo: 0 };
+  const ejA = zonas[0] ?? vacia;
+  const ejB = zonas[Math.min(2, zonas.length - 1)] ?? vacia;
 
   const [isDark, setIsDark] = useState(false);
 
@@ -104,8 +81,8 @@ useEffect(() => {
           </div>
 
           <p className="text-muted-foreground max-w-3xl text-xs lg:text-md xl:text-lg font-montserrat">
-            Precios por zona y opción por horas para múltiples paradas
-            o servicios fuera de ciudad.
+            Precios por zona, los mismos de la app. Por horas, cuando
+            alguna dirección está fuera de nuestras zonas.
           </p>
         </div>
 
@@ -207,7 +184,7 @@ useEffect(() => {
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaClock className="text-yellow-300 text-lg shrink-0" />
-                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 0,20€/min</span>
+                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 15 min gratis; si pasa, 0,20€/min</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
@@ -234,7 +211,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Días laborables</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">22€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.laborable}€</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -242,15 +219,24 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Domingos y festivos</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">30€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.festivo}€</p>
+                </div>
+                <span className="text-sm text-muted-foreground mb-1">/ hora</span>
+              </div>
+
+              <div className="flex justify-between items-end">
+                <div>
+                  <p className="text-sm text-muted-foreground">Express (para hoy)</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.express}€</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t text-xs lg:text-sm text-muted-foreground leading-relaxed">
-              Usamos la tarifa por hora para entregas con múltiples
-              direcciones o fuera de Barcelona.
+              La tarifa por hora se usa cuando alguna dirección (recogida o
+              entrega) está fuera de nuestras zonas. Varias entregas en una
+              ruta van por zonas: cada una, el precio de la suya.
             </div>
           </div>
 
@@ -274,18 +260,18 @@ useEffect(() => {
     </div>
 
     <div className="flex justify-between border-b border-foreground/20 pb-2">
-      <span className="text-sm text-muted-foreground">Entrega Zona 1</span>
-      <span className="text-lg font-semibold">5,5€</span>
+      <span className="text-sm text-muted-foreground">Entrega {ejA.zona}</span>
+      <span className="text-lg font-semibold">{ejA.lab}</span>
     </div>
 
     <div className="flex justify-between border-b border-foreground/20 pb-2">
-      <span className="text-sm text-muted-foreground">Entrega Zona 3</span>
-      <span className="text-lg font-semibold">9€</span>
+      <span className="text-sm text-muted-foreground">Entrega {ejB.zona}</span>
+      <span className="text-lg font-semibold">{ejB.lab}</span>
     </div>
 
     <div className="flex justify-between pt-4 text-2xl font-bold">
       <span>Total</span>
-      <span className="font-bold">16,5€</span>
+      <span className="font-bold">{precioCorto(2 + ejA.laborable + ejB.laborable)}</span>
     </div>
 
   </div>
@@ -320,8 +306,8 @@ useEffect(() => {
                 Calcula tu envío
               </h3>
               <p className="text-hueso/70 text-xs lg:text-sm max-w-md font-montserrat">
-                Introduce origen, destino y detalles de carga
-                para obtener un precio estimado al instante.
+                El mismo precio que en la app: escribe las
+                direcciones y el día, y lo ves al instante.
               </p>
             </div>
           </div>

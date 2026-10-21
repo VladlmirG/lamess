@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import CityCard from "@/components/tabula-rasa/CityCard";
-import ComoFunciona from "@/components/tabula-rasa/ComoFunciona";
+import ComoSePide from "@/components/inicio/ComoSePide";
+import PreguntasFrecuentes from "@/components/inicio/PreguntasFrecuentes";
 import Hero2 from "@/components/tabula-rasa/hero2";
 import LogosCarousel from "@/components/tabula-rasa/LogosCarousel";
 import QueHacemos from "@/components/tabula-rasa/QueHacemos";
@@ -61,12 +62,14 @@ export default function Home() {
 
         {/* CONTENT */}
         <div className="relative z-10">
-          <ComoFunciona />
+          {/* 21-oct · INC-0020 · «¿Cómo se pide?» en lugar de ComoFunciona. */}
+          <ComoSePide />
           <Ventajas />
         </div>
 
       </section>
       {/* ===== END SHARED BLOCK ===== */}
+      <PreguntasFrecuentes/>
       <Sponsors/>
       <ReviewsCarousel/>
       <LogosCarousel/>
