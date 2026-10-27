@@ -11,13 +11,14 @@ import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
 // import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 import Link from "next/link";
-import { precioCorto, type FilaZona } from "@/lib/tarifasPagina";
-import { TARIFA_HORA } from "@/lib/precio";
+import { precioCorto, type FilaZona, type TextosPagina } from "@/lib/tarifasPagina";
 
 
 // 21-oct · INC-0020 · Las zonas y precios llegan de la página, que los lee de la
 // app (lib/tarifas): los mismos que el calculador y que la app al pedir.
-export default function TarifasMadrid({ zonas }: { zonas: FilaZona[] }) {
+// 27-oct · Los suplementos y la tarifa por horas, también (`textos`, de
+// lib/tarifasPagina).
+export default function TarifasMadrid({ zonas, textos }: { zonas: FilaZona[]; textos: TextosPagina }) {
   // El ejemplo de cálculo: recogida y una entrega en la primera zona, otra entrega en la segunda.
   const vacia: FilaZona = { zona: "Zona", lab: "—", fes: "—", codes: [], laborable: 0, festivo: 0 };
   const ejA = zonas[0] ?? vacia;
@@ -159,19 +160,19 @@ useEffect(() => {
             <ul className="space-y-4 font-montserrat text-[11px] lg:text-xs">
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaBolt className="text-orange-500 text-lg shrink-0" />
-                <span><strong className="text-orange-500 uppercase">Express:</strong> +50% s/base</span>
+                <span><strong className="text-orange-500 uppercase">Express:</strong> {textos.express} s/base</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaCloudRain className="text-blue-400 text-lg shrink-0" />
-                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> +30% s/base</span>
+                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> {textos.lluvia} s/base</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaClock className="text-yellow-300 text-lg shrink-0" />
-                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 15 min gratis; si pasa, 0,20€/min</span>
+                <span><strong className="text-yellow-300 uppercase">Espera:</strong> {textos.espera}</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
-                <span><strong className="text-slate-400 uppercase">Peso:</strong> +0,10€/kg <span className="text-[9px] opacity-60">(+30kg)</span></span>
+                <span><strong className="text-slate-400 uppercase">Peso:</strong> {textos.peso} <span className="text-[9px] opacity-60">{textos.pesoDesde}</span></span>
               </li>
             </ul>
           </div>
@@ -192,7 +193,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Días laborables</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.laborable}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaLaborable}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -200,7 +201,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Domingos y festivos</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.festivo}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaFestivo}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -208,7 +209,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Express (para hoy)</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.express}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaExpress}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>

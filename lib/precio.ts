@@ -18,15 +18,13 @@
 // Es el precio que la app guarda al pedir (el que se cobra), con sus mismos
 // redondeos. Cualquier cambio aquí: comprobar con las pruebas contra el código
 // de la app.
+//
+// 27-oct · Los importes de arriba (2 €, +50 %, +30 %, 30 kg, 0,10 €, 15 min,
+// 0,20 €, 22/30/35 €/h) ya no están escritos aquí: llegan de la app con las
+// zonas (`t.reglas`, ver lib/tarifas), con los de siempre de respaldo. La
+// cuenta es la misma.
 
-import type { Ciudad, Tarifas, ZonaTarifa } from "@/lib/tarifas";
-
-export const RECOGIDA_BARCELONA = 2;
-export const TARIFA_HORA = { laborable: 22, festivo: 30, express: 35 } as const;
-export const KG_INCLUIDOS = 30;
-export const EURO_POR_KG = 0.1;
-export const ESPERA_GRATIS_MIN = 15;
-export const EURO_POR_MIN_ESPERA = 0.2;
+import { num, pct, type Ciudad, type Reglas, type Tarifas, type ZonaTarifa } from "@/lib/tarifas";
 
 // ── Festivos (la misma lista que la app) ────────────────────────────────────
 
@@ -131,6 +129,7 @@ const r2 = (n: number) => parseFloat(n.toFixed(2));
  * recogida + entregas + peso + express + lluvia, cada recargo redondeado.
  */
 export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
+  const r = t.reglas;
   const ciudad = e.ciudad;
   const festivo = esFestivo(e.fecha);
   const express = e.fecha === e.hoy;
@@ -145,7 +144,7 @@ export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
   const porHoras = conCp.length > 0 && fuera.length > 0;
 
   if (porHoras) {
-    const tarifa = express ? TARIFA_HORA.express : festivo ? TARIFA_HORA.festivo : TARIFA_HORA.laborable;
+    const tarifa = express ? r.horaExpress : festivo ? r.horaFestivo : r.horaLaborable;
     return {
       modo: "horas", total: r2(tarifa * 1), festivo, express, conLluvia: 0, tarifaHora: tarifa, fuera,
       lineas: [{ texto: `Por horas: 1 h × ${tarifa} €/h`, importe: tarifa, tipo: "horas" }],
@@ -155,10 +154,10 @@ export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
   const tipoZona: TipoLinea = festivo ? "festivo" : "base";
   const lineas: LineaPrecio[] = [];
 
-  // Recogida (calculatePickupFee): Barcelona 2 €; Madrid, la zona de la recogida.
+  // Recogida (calculatePickupFee): Barcelona, la fija (2 €); Madrid, la zona de la recogida.
   let recogida: number;
   if (ciudad === "Barcelona") {
-    recogida = RECOGIDA_BARCELONA;
+    recogida = r.recogidaBarcelona;
     lineas.push({ texto: "Recogida fija", importe: recogida, tipo: "base" });
   } else {
     const zr = zonaDeCp(t, e.recogida.cp, ciudad);
@@ -177,22 +176,51 @@ export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
     lineas.push({ texto: z ? `${n} · ${z.nombre}` : n, importe: p, tipo: tipoZona });
   });
 
-  const base = recogida + paradas;
-  const peso = kg > KG_INCLUIDOS ? r2((kg - KG_INCLUIDOS) * EURO_POR_KG) : 0;
-  const extraExpress = express ? r2(base * 0.5) : 0;
-  const extraLluvia = e.lluvia ? r2(base * 0.3) : 0;
-  if (express) lineas.push({ texto: "Express, para hoy (+50 %)", importe: extraExpress, tipo: "express" });
-  if (e.lluvia) lineas.push({ texto: "Lluvia (+30 %)", importe: extraLluvia, tipo: "lluvia" });
-  if (peso) lineas.push({ texto: `Peso: ${r2(kg - KG_INCLUIDOS).toLocaleString("es-ES")} kg de más × 0,10 €`, importe: peso, tipo: "peso" });
+  // Express y lluvia: sobre recogida + entregas (con varias entregas, según la
+  // regla de la app `recargoRutaSobreTotal`; hoy, también sobre la recogida).
+  const base = e.entregas.length > 1 && !r.recargoRutaSobreTotal ? paradas : recogida + paradas;
+  const fExpress = r.expressPct / 100, fLluvia = r.lluviaPct / 100;
+  const peso = kg > r.pesoKgIncluidos ? r2((kg - r.pesoKgIncluidos) * r.pesoEurKg) : 0;
+  const extraExpress = express ? r2(base * fExpress) : 0;
+  const extraLluvia = e.lluvia ? r2(base * fLluvia) : 0;
+  if (express) lineas.push({ texto: `Express, para hoy (+${pct(r.expressPct)})`, importe: extraExpress, tipo: "express" });
+  if (e.lluvia) lineas.push({ texto: `Lluvia (+${pct(r.lluviaPct)})`, importe: extraLluvia, tipo: "lluvia" });
+  if (peso) lineas.push({ texto: `Peso: ${r2(kg - r.pesoKgIncluidos).toLocaleString("es-ES")} kg de más × ${textosReglas(r).eurKg}`, importe: peso, tipo: "peso" });
 
   return {
     modo: "paradas", total: r2(paradas + recogida + peso + extraExpress + extraLluvia), lineas, festivo, express,
-    conLluvia: r2(base * 0.3), tarifaHora: null, fuera: [],
+    conLluvia: r2(base * fLluvia), tarifaHora: null, fuera: [],
   };
 }
 
 /** Lo que costaría una espera de esos minutos (como la app: 15 gratis; después, todos a 0,20 €). */
-export const cargoEspera = (min: number): number => (min > ESPERA_GRATIS_MIN ? Math.round(min * EURO_POR_MIN_ESPERA * 100) / 100 : 0);
+export const cargoEspera = (r: Reglas, min: number): number => (min > r.esperaMinGratis ? Math.round(min * r.esperaEurMin * 100) / 100 : 0);
+
+/** 27-oct · Los textos de las reglas, para las páginas de Tarifas, el calculador y las preguntas. */
+export function textosReglas(r: Reglas) {
+  const dosDec = (n: number) => n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const eur = (n: number) => `${n.toLocaleString("es-ES", { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 })} €`;
+  return {
+    /** «2 €» */
+    recogida: eur(r.recogidaBarcelona),
+    /** «+50 %» */
+    express: `+${pct(r.expressPct)}`,
+    /** «+30 %» */
+    lluvia: `+${pct(r.lluviaPct)}`,
+    /** «30» (kg) */
+    kg: num(r.pesoKgIncluidos),
+    /** «0,10 €» */
+    eurKg: `${dosDec(r.pesoEurKg)} €`,
+    /** «15» (min) */
+    minGratis: num(r.esperaMinGratis),
+    /** «0,20 €» */
+    eurMin: `${dosDec(r.esperaEurMin)} €`,
+    /** «22», «30», «35» (€/h) */
+    horaLaborable: num(r.horaLaborable),
+    horaFestivo: num(r.horaFestivo),
+    horaExpress: num(r.horaExpress),
+  };
+}
 
 /** La ciudad de un punto por su CP: 08 Barcelona, 28 Madrid (como la app, que manda el CP sobre el nombre). */
 export function ciudadDeCp(cp: string | null | undefined): Ciudad | null {

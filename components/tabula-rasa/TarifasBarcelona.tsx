@@ -10,13 +10,14 @@ import { IoIosBicycle } from "react-icons/io";
 import { PiPackageLight, PiHandCoinsFill } from "react-icons/pi";
 import { CiCalculator2 } from "react-icons/ci";
 import Link from "next/link";
-import { precioCorto, type FilaZona } from "@/lib/tarifasPagina";
-import { TARIFA_HORA } from "@/lib/precio";
+import { precioCorto, type FilaZona, type TextosPagina } from "@/lib/tarifasPagina";
 // import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"; 
 
 // 21-oct · INC-0020 · Las zonas y precios llegan de la página, que los lee de la
 // app (lib/tarifas): los mismos que el calculador y que la app al pedir.
-export default function TarifasBarcelona({ zonas }: { zonas: FilaZona[] }) {
+// 27-oct · Los suplementos, la recogida y la tarifa por horas, también
+// (`textos`, de lib/tarifasPagina).
+export default function TarifasBarcelona({ zonas, textos }: { zonas: FilaZona[]; textos: TextosPagina }) {
   // El ejemplo de cálculo: recogida + una entrega en la primera zona y otra en la tercera.
   const vacia: FilaZona = { zona: "Zona", lab: "—", fes: "—", codes: [], laborable: 0, festivo: 0 };
   const ejA = zonas[0] ?? vacia;
@@ -106,7 +107,7 @@ useEffect(() => {
   </div>
 
   <span className="text-[9px] md:text-xs font-semibold whitespace-nowrap mt-5">
-    +2€ recogida única
+    +{textos.recogida} recogida única
   </span>
 
 </div>
@@ -176,19 +177,19 @@ useEffect(() => {
             <ul className="space-y-4 font-montserrat text-[11px] lg:text-xs">
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaBolt className="text-orange-500 text-lg shrink-0" />
-                <span><strong className="text-orange-500 uppercase">Express:</strong> +50% s/base</span>
+                <span><strong className="text-orange-500 uppercase">Express:</strong> {textos.express} s/base</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaCloudRain className="text-blue-400 text-lg shrink-0" />
-                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> +30% s/base</span>
+                <span><strong className="text-blue-400 uppercase">Lluvia:</strong> {textos.lluvia} s/base</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaClock className="text-yellow-300 text-lg shrink-0" />
-                <span><strong className="text-yellow-300 uppercase">Espera:</strong> 15 min gratis; si pasa, 0,20€/min</span>
+                <span><strong className="text-yellow-300 uppercase">Espera:</strong> {textos.espera}</span>
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
-                <span><strong className="text-slate-400 uppercase">Peso:</strong> +0,10€/kg <span className="text-[9px] opacity-60">(+30kg)</span></span>
+                <span><strong className="text-slate-400 uppercase">Peso:</strong> {textos.peso} <span className="text-[9px] opacity-60">{textos.pesoDesde}</span></span>
               </li>
             </ul>
           </div>
@@ -211,7 +212,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Días laborables</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.laborable}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaLaborable}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -219,7 +220,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Domingos y festivos</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.festivo}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaFestivo}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -227,7 +228,7 @@ useEffect(() => {
               <div className="flex justify-between items-end">
                 <div>
                   <p className="text-sm text-muted-foreground">Express (para hoy)</p>
-                  <p className="text-4xl font-bold mt-1 tracking-tight">{TARIFA_HORA.express}€</p>
+                  <p className="text-4xl font-bold mt-1 tracking-tight">{textos.horaExpress}</p>
                 </div>
                 <span className="text-sm text-muted-foreground mb-1">/ hora</span>
               </div>
@@ -256,7 +257,7 @@ useEffect(() => {
 
     <div className="flex justify-between border-b border-foreground/20 pb-2">
       <span className="text-sm text-muted-foreground">1 Recogida</span>
-      <span className="text-lg font-semibold">2€</span>
+      <span className="text-lg font-semibold">{textos.recogida}</span>
     </div>
 
     <div className="flex justify-between border-b border-foreground/20 pb-2">
@@ -271,13 +272,13 @@ useEffect(() => {
 
     <div className="flex justify-between pt-4 text-2xl font-bold">
       <span>Total</span>
-      <span className="font-bold">{precioCorto(2 + ejA.laborable + ejB.laborable)}</span>
+      <span className="font-bold">{precioCorto(textos.recogidaEur + ejA.laborable + ejB.laborable)}</span>
     </div>
 
   </div>
 
   <div className="mt-8 pt-6 border-t text-xs lg:text-sm text-muted-foreground leading-relaxed">
-    En Barcelona, cada servicio incluye un coste fijo de recogida (2€)
+    En Barcelona, cada servicio incluye un coste fijo de recogida ({textos.recogida})
     más el precio correspondiente a la zona de entrega.
   </div>
 

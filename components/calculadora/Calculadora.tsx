@@ -5,6 +5,9 @@
 // El precio es el MISMO que da la app al pedir: las zonas y tarifas salen de la
 // app (lib/tarifas) y la cuenta es la de la app (lib/precio, probado contra el
 // código de la app). Las direcciones y la ruta, con Mapbox, como en la app.
+//
+// 27-oct · Los suplementos (recogida, express, lluvia, peso, espera) y la
+// tarifa por horas también llegan de la app (`tarifas.reglas`).
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
@@ -12,7 +15,7 @@ import "./calculadora.css";
 import BuscadorDireccion, { type ChipDireccion } from "./BuscadorDireccion";
 import type { PinMapa } from "./MapaRuta";
 import { CO2_G_POR_KM, rutaEnBici, TOKEN_MAPBOX, type Punto, type Ruta } from "@/lib/mapbox";
-import { calcularPrecio, ciudadDeCp, esFestivo, hoyEnMadrid, sumarDias, zonaDeCp, KG_INCLUIDOS, RECOGIDA_BARCELONA, TARIFA_HORA, type LineaPrecio, type ResultadoPrecio } from "@/lib/precio";
+import { calcularPrecio, ciudadDeCp, esFestivo, hoyEnMadrid, sumarDias, zonaDeCp, textosReglas, type LineaPrecio, type ResultadoPrecio } from "@/lib/precio";
 import type { Ciudad, Tarifas } from "@/lib/tarifas";
 import { TELEFONO, URL_ENTRAR, URL_REGISTRO, URL_TELEFONO, whatsapp } from "@/lib/enlaces";
 
@@ -49,6 +52,7 @@ function useRuta(puntos: [number, number][]): Ruta | null {
 }
 
 export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
+  const tx = textosReglas(tarifas.reglas);
   const conMapbox = TOKEN_MAPBOX !== "";
   const hoy = useSyncExternalStore(sinSuscripcion, () => hoyEnMadrid(), () => null);
   const [recogida, setRecogida] = useState<Punto | null>(null);
@@ -100,7 +104,7 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
     const municipio = esRecogida ? p.municipio || ciudad : p.municipio || recogida?.municipio || ciudad;
     const z = zonaDeCp(tarifas, p.cp, municipio);
     if (!z) return { texto: `${lugar(p)} · fuera de zona`, corto: "fuera de zona", fuera: true };
-    if (esRecogida && ciudad === "Barcelona") return { texto: `${p.cp} · recogida ${RECOGIDA_BARCELONA} €`, corto: p.cp };
+    if (esRecogida && ciudad === "Barcelona") return { texto: `${p.cp} · recogida ${tx.recogida}`, corto: p.cp };
     return { texto: `${p.cp} · ${z.nombre}`, corto: z.nombre };
   }
 
@@ -153,21 +157,21 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
       if (l.tipo === "horas") lineas.push({ texto: l.texto, importe: eur(l.importe) });
       else if (l.tipo === "festivo") lineas.push({ texto: `${l.texto} · festivo`, importe: eur(l.importe), tono: "naranja" });
       else if (l.tipo === "express") lineas.push({ texto: l.texto, importe: `+${eur(l.importe)}`, tono: "naranja" });
-      else if (l.tipo === "lluvia") lineas.push({ texto: "Si llueve (+30 %)", importe: `+${eur(l.importe)}`, tono: "azul" });
+      else if (l.tipo === "lluvia") lineas.push({ texto: `Si llueve (${tx.lluvia})`, importe: `+${eur(l.importe)}`, tono: "azul" });
       else if (l.tipo === "peso") lineas.push({ texto: l.texto, importe: `+${eur(l.importe)}` });
       else lineas.push({ texto: l.texto, importe: eur(l.importe) });
     }
     if (precio.modo === "horas") {
-      if (precio.express) lineas.push({ texto: `Tarifa express (${TARIFA_HORA.express} €/h)`, importe: "", tono: "naranja" });
-      else if (precio.festivo) lineas.push({ texto: `Tarifa de festivo (${TARIFA_HORA.festivo} €/h)`, importe: "", tono: "naranja" });
+      if (precio.express) lineas.push({ texto: `Tarifa express (${tx.horaExpress} €/h)`, importe: "", tono: "naranja" });
+      else if (precio.festivo) lineas.push({ texto: `Tarifa de festivo (${tx.horaFestivo} €/h)`, importe: "", tono: "naranja" });
       const quien = precio.fuera.includes("recogida") ? "La recogida está" : precio.fuera.length > 1 ? "Varias entregas están" : "Una entrega está";
       notas.push(`${quien} fuera de nuestras zonas: va por horas. Aquí, la primera hora; si hace falta más, se ajusta al cerrar la entrega.`);
       notas.push("Por horas no hay recargo de lluvia ni de peso.");
     } else if (!lluvia) {
-      notas.push(`Si ese día llueve: +${eur(precio.conLluvia)} (lluvia, +30 %).`);
+      notas.push(`Si ese día llueve: +${eur(precio.conLluvia)} (lluvia, ${tx.lluvia}).`);
     }
   }
-  notas.push("Esperas: hasta 15 minutos, gratis; si pasan de 15, toda la espera a 0,20 € el minuto. Van aparte.");
+  notas.push(`Esperas: hasta ${tx.minGratis} minutos, gratis; si pasan de ${tx.minGratis}, toda la espera a ${tx.eurMin} el minuto. Van aparte.`);
 
   const total = precio ? eur(precio.total) : "—";
   const resumen = precio && fecha
@@ -311,7 +315,7 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
             <span id="lmc-cuando" className="lmc-etiqueta">¿Cuándo?</span>
             <div role="group" aria-labelledby="lmc-cuando" className="lmc-dias">
               <button type="button" className="lmc-dia" data-hoy="1" aria-pressed={dia === "hoy"} onClick={() => setDia("hoy")}>
-                <strong>Hoy</strong><span>urgente · express +50 %</span>
+                <strong>Hoy</strong><span>urgente · express {tx.express}</span>
               </button>
               <button type="button" className="lmc-dia" aria-pressed={dia === "manana"} onClick={() => setDia("manana")}>
                 <strong>Mañana</strong><span>{manana ? diaLargo(manana) : " "}</span>
@@ -345,20 +349,20 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
                 <input id="lmc-kg" type="number" min="0" step="0.1" inputMode="decimal" placeholder="0" value={kg} onChange={e => setKg(e.target.value)} aria-describedby="lmc-kg-ayuda" />
                 <span>kg</span>
               </div>
-              <span id="lmc-kg-ayuda" className="lmc-ayuda">Hasta {KG_INCLUIDOS} kg, incluido. Cada kilo de más: 0,10 €.</span>
+              <span id="lmc-kg-ayuda" className="lmc-ayuda">Hasta {tx.kg} kg, incluido. Cada kilo de más: {tx.eurKg}.</span>
             </div>
             <button type="button" role="switch" aria-checked={lluvia} className="lmc-lluvia" onClick={() => setLluvia(v => !v)}>
               <span aria-hidden="true" className="lmc-interruptor" />
               <span>
                 <strong>¿Y si ese día llueve?</strong>
-                <small>Lluvia: +30 %. Míralo con el precio.</small>
+                <small>Lluvia: {tx.lluvia}. Míralo con el precio.</small>
               </span>
             </button>
           </div>
 
           <p className="lmc-nota-horas">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
-            <span>Fuera de nuestras zonas se cobra <strong>por horas</strong>: {TARIFA_HORA.laborable} €/h, {TARIFA_HORA.festivo} €/h en festivo y {TARIFA_HORA.express} €/h en express.</span>
+            <span>Fuera de nuestras zonas se cobra <strong>por horas</strong>: {tx.horaLaborable} €/h, {tx.horaFestivo} €/h en festivo y {tx.horaExpress} €/h en express.</span>
           </p>
         </section>
 

@@ -6,8 +6,34 @@
 // saca de Ajustes → Zonas. Si la app no contesta, se usan las de RESPALDO de
 // abajo (las que tenía la web), para que el calculador y las páginas de
 // Tarifas nunca se queden vacíos.
+//
+// 27-oct · También las REGLAS (recogida de Barcelona, express, lluvia, peso,
+// espera y por horas), que hasta hoy estaban escritas a mano en la web. Llegan
+// en la misma respuesta de la app. Si la app no las manda (o alguna no tiene
+// sentido), se usa la de RESPALDO: los valores que tenía la web.
 
 export type Ciudad = "Barcelona" | "Madrid";
+
+export interface Reglas {
+  /** Recogida fija en Barcelona, en cada envío (en Madrid la recogida va por su zona). */
+  recogidaBarcelona: number;
+  /** Express (para hoy): % sobre recogida + entregas. */
+  expressPct: number;
+  /** Lluvia: % sobre recogida + entregas. */
+  lluviaPct: number;
+  /** Con varias entregas, express y lluvia sobre recogida + entregas (true) o solo sobre las entregas. */
+  recargoRutaSobreTotal: boolean;
+  /** Kilos incluidos; cada kilo de más, a pesoEurKg. */
+  pesoKgIncluidos: number;
+  pesoEurKg: number;
+  /** Minutos de espera gratis; si se pasa, todos los minutos a esperaEurMin. */
+  esperaMinGratis: number;
+  esperaEurMin: number;
+  /** Por horas (algún punto fuera de las zonas), €/h. */
+  horaLaborable: number;
+  horaFestivo: number;
+  horaExpress: number;
+}
 
 export interface ZonaTarifa {
   nombre: string;
@@ -24,6 +50,8 @@ export interface ZonaTarifa {
 export interface Tarifas {
   /** Por ciudad, como se llama en las zonas de la app («Barcelona», «Madrid»…). */
   ciudades: Partial<Record<string, ZonaTarifa[]>>;
+  /** 27-oct · Recogida, express, lluvia, peso, espera y por horas. */
+  reglas: Reglas;
   /** «app»: leídas de la app; «respaldo»: las guardadas en la web. */
   origen: "app" | "respaldo";
   actualizado: string | null;
@@ -34,10 +62,26 @@ export const URL_APP = (process.env.LAMESS_APP_URL || "https://app.lamess.es").r
 
 const z = (nombre: string, laborable: number, festivo: number, cps: string[]): ZonaTarifa => ({ nombre, cps, laborable, festivo, fuera: false });
 
+/** Las reglas que tenía la web, por si la app no las manda. */
+export const REGLAS_RESPALDO: Reglas = {
+  recogidaBarcelona: 2,
+  expressPct: 50,
+  lluviaPct: 30,
+  recargoRutaSobreTotal: true,
+  pesoKgIncluidos: 30,
+  pesoEurKg: 0.1,
+  esperaMinGratis: 15,
+  esperaEurMin: 0.2,
+  horaLaborable: 22,
+  horaFestivo: 30,
+  horaExpress: 35,
+};
+
 /** Las que tenía la web (calculador), por si la app no contesta. */
 export const RESPALDO: Tarifas = {
   origen: "respaldo",
   actualizado: null,
+  reglas: REGLAS_RESPALDO,
   ciudades: {
     Barcelona: [
       z("Zona 1", 5.5, 9, ["08006", "08007", "08008", "08009", "08010", "08011", "08012", "08013", "08021", "08025", "08036", "08037"]),
@@ -57,10 +101,37 @@ export const RESPALDO: Tarifas = {
 
 const numero = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 
+/** Lo que se acepta de cada regla; fuera de esto, la de respaldo. */
+const LIMITES: Record<Exclude<keyof Reglas, "recargoRutaSobreTotal">, [number, number]> = {
+  recogidaBarcelona: [0, 50],
+  expressPct: [0, 300],
+  lluviaPct: [0, 300],
+  pesoKgIncluidos: [0, 1000],
+  pesoEurKg: [0, 20],
+  esperaMinGratis: [0, 240],
+  esperaEurMin: [0, 10],
+  horaLaborable: [1, 500],
+  horaFestivo: [1, 500],
+  horaExpress: [1, 500],
+};
+
+/** Las reglas que llegan de la app, una a una: la que falte o no tenga sentido, de respaldo. */
+export function leerReglas(v: unknown): Reglas {
+  const o = v && typeof v === "object" ? (v as Record<string, unknown>) : {};
+  const r: Reglas = { ...REGLAS_RESPALDO };
+  for (const k of Object.keys(LIMITES) as (keyof typeof LIMITES)[]) {
+    const n = numero(o[k]);
+    const [min, max] = LIMITES[k];
+    if (n != null && n >= min && n <= max) r[k] = n;
+  }
+  if (typeof o.recargoRutaSobreTotal === "boolean") r.recargoRutaSobreTotal = o.recargoRutaSobreTotal;
+  return r;
+}
+
 /** Lo que llega de la app, comprobado. Nada raro pasa: lo que no encaja se descarta. */
 export function leerTarifas(cuerpo: unknown): Tarifas | null {
   if (!cuerpo || typeof cuerpo !== "object") return null;
-  const c = cuerpo as { ok?: unknown; ciudades?: unknown; actualizado?: unknown };
+  const c = cuerpo as { ok?: unknown; ciudades?: unknown; reglas?: unknown; actualizado?: unknown };
   if (c.ok !== true || !c.ciudades || typeof c.ciudades !== "object") return null;
   const ciudades: Tarifas["ciudades"] = {};
   for (const [ciudad, lista] of Object.entries(c.ciudades as Record<string, unknown>).slice(0, 50)) {
@@ -80,7 +151,7 @@ export function leerTarifas(cuerpo: unknown): Tarifas | null {
     if (zonas.length) ciudades[ciudad] = zonas;
   }
   if (!ciudades.Barcelona && !ciudades.Madrid) return null;
-  return { ciudades, origen: "app", actualizado: typeof c.actualizado === "string" ? c.actualizado : null };
+  return { ciudades, reglas: leerReglas(c.reglas), origen: "app", actualizado: typeof c.actualizado === "string" ? c.actualizado : null };
 }
 
 /**
@@ -106,3 +177,9 @@ export async function cargarTarifas(): Promise<Tarifas> {
 /** «5,5 €», «9 €». */
 export const euros = (n: number | null | undefined): string =>
   n == null ? "—" : `${(Math.round(n * 100) / 100).toLocaleString("es-ES", { minimumFractionDigits: 0, maximumFractionDigits: 2 })} €`;
+
+/** 27-oct · «50 %», «12,5 %». */
+export const pct = (n: number): string => `${n.toLocaleString("es-ES", { maximumFractionDigits: 2 })} %`;
+
+/** 27-oct · «30», «12,5». */
+export const num = (n: number): string => n.toLocaleString("es-ES", { maximumFractionDigits: 2 });
