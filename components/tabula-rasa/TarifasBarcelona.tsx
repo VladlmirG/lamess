@@ -189,8 +189,19 @@ useEffect(() => {
               </li>
               <li className="flex items-center gap-3 text-hueso/90">
                 <FaWeightHanging className="text-slate-400 text-lg shrink-0" />
-                <span><strong className="text-slate-400 uppercase">Peso:</strong> {textos.peso} <span className="text-[9px] opacity-60">{textos.pesoDesde}</span></span>
+                <span>
+                  <strong className="text-slate-400 uppercase">Peso:</strong> {textos.peso} <span className="text-[9px] opacity-60">{textos.pesoDesde}</span>
+                  {/* 28-oct · Por tramos (panel de tarifas de la app). */}
+                  {textos.pesoTramos.length > 0 && <span className="block mt-1 opacity-80">{textos.pesoTramos.join(" · ")}</span>}
+                </span>
               </li>
+              {/* 28-oct · Los extras que traiga la tarifa de la app (remolque, devolución de envases, entrega no realizada). */}
+              {textos.extras.map(x => (
+                <li key={x.etiqueta} className="flex items-center gap-3 text-hueso/90">
+                  <PiHandCoinsFill className="text-oliva-light text-lg shrink-0" />
+                  <span><strong className="text-oliva-light uppercase">{x.etiqueta}:</strong> {x.texto}</span>
+                </li>
+              ))}
             </ul>
           </div>
 

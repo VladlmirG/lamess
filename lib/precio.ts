@@ -23,6 +23,11 @@
 // 0,20 €, 22/30/35 €/h) ya no están escritos aquí: llegan de la app con las
 // zonas (`t.reglas`, ver lib/tarifas), con los de siempre de respaldo. La
 // cuenta es la misma.
+//
+// 28-oct · Panel de tarifas de la app: el peso puede ir por tramos (cada envío
+// paga lo de su tramo, como `cargoPeso` de la app), y si la app manda una
+// tarifa programada (`t.proxima`), un envío de ese día en adelante se calcula
+// con ella, como en la app.
 
 import { num, pct, type Ciudad, type Reglas, type Tarifas, type ZonaTarifa } from "@/lib/tarifas";
 
@@ -109,6 +114,10 @@ export interface LineaPrecio { texto: string; importe: number; tipo: TipoLinea }
 
 export interface ResultadoPrecio {
   modo: "paradas" | "horas";
+  /** 28-oct · Las reglas con que se ha calculado (las de hoy o las de la tarifa programada). */
+  reglas: Reglas;
+  /** 28-oct · Si se ha calculado con la tarifa programada: desde qué día vale («AAAA-MM-DD»). */
+  tarifaDesde: string | null;
   total: number;
   lineas: LineaPrecio[];
   festivo: boolean;
@@ -123,12 +132,39 @@ export interface ResultadoPrecio {
 
 const r2 = (n: number) => parseFloat(n.toFixed(2));
 
+/** 28-oct · El tramo de peso en que caen unos kilos (modo tramos), con sus límites. */
+export function tramoDe(r: Reglas, kg: number): { desde: number; hasta: number | null; eur: number } | null {
+  if (r.pesoModo !== "tramos" || !(kg > r.pesoKgIncluidos)) return null;
+  let desde = r.pesoKgIncluidos;
+  for (const t of r.pesoTramos) {
+    if (t.hastaKg != null && t.hastaKg <= r.pesoKgIncluidos) continue;
+    if (t.hastaKg == null || kg <= t.hastaKg) return { desde, hasta: t.hastaKg, eur: t.eur };
+    desde = t.hastaKg;
+  }
+  return null;
+}
+
+/** 28-oct · El cargo de peso, como la app: por kilo de más (redondeado como siempre en la web) o lo del tramo. */
+export function cargoPeso(r: Reglas, kg: number): number {
+  if (!(kg > r.pesoKgIncluidos)) return 0;
+  if (r.pesoModo === "tramos") return tramoDe(r, kg)?.eur ?? 0;
+  return r2((kg - r.pesoKgIncluidos) * r.pesoEurKg);
+}
+
+/** 28-oct · Las tarifas con que se calcula un envío de ese día: la programada, si ya vale ese día; si no, la de hoy. */
+export function tarifasDelDia(t: Tarifas, fecha: string): Tarifas {
+  if (!t.proxima || !(fecha >= t.proxima.valeDesde)) return t;
+  return { ...t, reglas: t.proxima.reglas, ciudades: t.proxima.ciudades, proxima: null };
+}
+
 /**
  * El precio que la app GUARDA al pedir (el que se cobra), en modo cliente y sin
  * descuentos de cliente. Es la misma cuenta para una entrega y para varias:
  * recogida + entregas + peso + express + lluvia, cada recargo redondeado.
  */
-export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
+export function calcularPrecio(tarifas: Tarifas, e: EntradaPrecio): ResultadoPrecio {
+  const t = tarifasDelDia(tarifas, e.fecha);
+  const tarifaDesde = t === tarifas ? null : tarifas.proxima?.valeDesde ?? null;
   const r = t.reglas;
   const ciudad = e.ciudad;
   const festivo = esFestivo(e.fecha);
@@ -146,7 +182,7 @@ export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
   if (porHoras) {
     const tarifa = express ? r.horaExpress : festivo ? r.horaFestivo : r.horaLaborable;
     return {
-      modo: "horas", total: r2(tarifa * 1), festivo, express, conLluvia: 0, tarifaHora: tarifa, fuera,
+      modo: "horas", reglas: r, tarifaDesde, total: r2(tarifa * 1), festivo, express, conLluvia: 0, tarifaHora: tarifa, fuera,
       lineas: [{ texto: `Por horas: 1 h × ${tarifa} €/h`, importe: tarifa, tipo: "horas" }],
     };
   }
@@ -180,15 +216,23 @@ export function calcularPrecio(t: Tarifas, e: EntradaPrecio): ResultadoPrecio {
   // regla de la app `recargoRutaSobreTotal`; hoy, también sobre la recogida).
   const base = e.entregas.length > 1 && !r.recargoRutaSobreTotal ? paradas : recogida + paradas;
   const fExpress = r.expressPct / 100, fLluvia = r.lluviaPct / 100;
-  const peso = kg > r.pesoKgIncluidos ? r2((kg - r.pesoKgIncluidos) * r.pesoEurKg) : 0;
+  const peso = cargoPeso(r, kg);
   const extraExpress = express ? r2(base * fExpress) : 0;
   const extraLluvia = e.lluvia ? r2(base * fLluvia) : 0;
   if (express) lineas.push({ texto: `Express, para hoy (+${pct(r.expressPct)})`, importe: extraExpress, tipo: "express" });
   if (e.lluvia) lineas.push({ texto: `Lluvia (+${pct(r.lluviaPct)})`, importe: extraLluvia, tipo: "lluvia" });
-  if (peso) lineas.push({ texto: `Peso: ${r2(kg - r.pesoKgIncluidos).toLocaleString("es-ES")} kg de más × ${textosReglas(r).eurKg}`, importe: peso, tipo: "peso" });
+  if (peso) {
+    const tramo = tramoDe(r, kg);
+    lineas.push({
+      texto: tramo
+        ? `Peso: ${num(kg)} kg (${tramo.hasta == null ? `más de ${num(tramo.desde)} kg` : `tramo ${num(tramo.desde)}–${num(tramo.hasta)} kg`})`
+        : `Peso: ${r2(kg - r.pesoKgIncluidos).toLocaleString("es-ES")} kg de más × ${textosReglas(r).eurKg}`,
+      importe: peso, tipo: "peso",
+    });
+  }
 
   return {
-    modo: "paradas", total: r2(paradas + recogida + peso + extraExpress + extraLluvia), lineas, festivo, express,
+    modo: "paradas", reglas: r, tarifaDesde, total: r2(paradas + recogida + peso + extraExpress + extraLluvia), lineas, festivo, express,
     conLluvia: r2(base * fLluvia), tarifaHora: null, fuera: [],
   };
 }
@@ -219,7 +263,30 @@ export function textosReglas(r: Reglas) {
     horaLaborable: num(r.horaLaborable),
     horaFestivo: num(r.horaFestivo),
     horaExpress: num(r.horaExpress),
+    /** 28-oct · «30–50 kg: +3 €», …, «más de 120 kg: +15 €» (vacío si va por kilo). */
+    tramos: textosTramos(r).map(t => `${t.kg}: +${eur(t.eur)}`),
+    /** 28-oct · La ayuda del peso del calculador. Por kilo, la de siempre. */
+    pesoAyuda: r.pesoModo === "tramos"
+      ? `Hasta ${num(r.pesoKgIncluidos)} kg, incluido. Después, por tramos: ${textosTramos(r).map(t => `${t.kg}, ${eur(t.eur)}`).join("; ")}.`
+      : `Hasta ${num(r.pesoKgIncluidos)} kg, incluido. Cada kilo de más: ${dosDec(r.pesoEurKg)} €.`,
+    /** 28-oct · Lo del peso en las preguntas frecuentes. Por kilo, lo de siempre. */
+    pesoFrase: r.pesoModo === "tramos"
+      ? `Hasta ${num(r.pesoKgIncluidos)} kg va incluido; de ahí, por tramos: ${textosTramos(r).map(t => `${t.kg}, +${eur(t.eur)}`).join("; ")}.`
+      : `Hasta ${num(r.pesoKgIncluidos)} kg va incluido; cada kilo de más, ${dosDec(r.pesoEurKg)} €.`,
   };
+}
+
+/** 28-oct · Los tramos de peso en texto: «30–50 kg», …, «más de 120 kg», con sus euros. */
+export function textosTramos(r: Reglas): { kg: string; eur: number }[] {
+  if (r.pesoModo !== "tramos") return [];
+  const out: { kg: string; eur: number }[] = [];
+  let desde = r.pesoKgIncluidos;
+  for (const t of r.pesoTramos) {
+    if (t.hastaKg != null && t.hastaKg <= r.pesoKgIncluidos) continue;
+    out.push({ kg: t.hastaKg == null ? `más de ${num(desde)} kg` : `${num(desde)}–${num(t.hastaKg)} kg`, eur: t.eur });
+    if (t.hastaKg != null) desde = t.hastaKg;
+  }
+  return out;
 }
 
 /** La ciudad de un punto por su CP: 08 Barcelona, 28 Madrid (como la app, que manda el CP sobre el nombre). */

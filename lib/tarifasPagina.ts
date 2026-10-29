@@ -8,6 +8,10 @@
 // 27-oct · Y los suplementos (recogida, express, lluvia, espera, peso) y la
 // tarifa por horas, también de la app (`tarifas.reglas`), escritos como los
 // escribía la página: «2€», «+50%», «0,20€/min».
+//
+// 28-oct · Panel de tarifas de la app: el peso por tramos (`pesoTramos`) y los
+// extras que traiga la tarifa (remolque, devolución de envases, entrega no
+// realizada). Por kilo y sin extras, la página sale igual que antes.
 
 import type { Ciudad, Reglas, Tarifas } from "@/lib/tarifas";
 
@@ -44,6 +48,10 @@ export interface TextosPagina {
   horaExpress: string;
   /** La recogida de Barcelona, en número (para el ejemplo). */
   recogidaEur: number;
+  /** 28-oct · Por tramos: «30–50kg: +3€», …, «+120kg: +15€». Vacío si va por kilo. */
+  pesoTramos: string[];
+  /** 28-oct · Los extras de la tarifa, si los trae: «Remolque o mudanza» → «40€/hora». */
+  extras: { etiqueta: string; texto: string }[];
 }
 
 export function textosPagina(r: Reglas): TextosPagina {
@@ -54,13 +62,33 @@ export function textosPagina(r: Reglas): TextosPagina {
     express: `+${n(r.expressPct)}%`,
     lluvia: `+${n(r.lluviaPct)}%`,
     espera: `${n(r.esperaMinGratis)} min gratis; si pasa, ${dos(r.esperaEurMin)}€/min`,
-    peso: `+${dos(r.pesoEurKg)}€/kg`,
-    pesoDesde: `(+${n(r.pesoKgIncluidos)}kg)`,
+    peso: r.pesoModo === "tramos" ? "por tramos" : `+${dos(r.pesoEurKg)}€/kg`,
+    pesoDesde: r.pesoModo === "tramos" ? `(desde ${n(r.pesoKgIncluidos)}kg)` : `(+${n(r.pesoKgIncluidos)}kg)`,
     horaLaborable: precioCorto(r.horaLaborable),
     horaFestivo: precioCorto(r.horaFestivo),
     horaExpress: precioCorto(r.horaExpress),
     recogidaEur: r.recogidaBarcelona,
+    pesoTramos: tramosCortos(r),
+    extras: [
+      ...(r.horaRemolque != null ? [{ etiqueta: "Remolque o mudanza", texto: `${precioCorto(r.horaRemolque)}/hora` }] : []),
+      ...(r.devolucionEnvases != null ? [{ etiqueta: "Devolución de envases", texto: `${precioCorto(r.devolucionEnvases)} por entrega` }] : []),
+      ...(r.intentoFallido != null ? [{ etiqueta: "Entrega no realizada", texto: `${precioCorto(r.intentoFallido)} por intento` }] : []),
+    ],
   };
+}
+
+/** 28-oct · Los tramos al estilo de la página: «30–50kg: +3€», …, «+120kg: +15€». */
+function tramosCortos(r: Reglas): string[] {
+  if (r.pesoModo !== "tramos") return [];
+  const n = (x: number) => x.toLocaleString("es-ES", { maximumFractionDigits: 2 });
+  const out: string[] = [];
+  let desde = r.pesoKgIncluidos;
+  for (const t of r.pesoTramos) {
+    if (t.hastaKg != null && t.hastaKg <= r.pesoKgIncluidos) continue;
+    out.push(`${t.hastaKg == null ? `+${n(desde)}kg` : `${n(desde)}–${n(t.hastaKg)}kg`}: +${precioCorto(t.eur)}`);
+    if (t.hastaKg != null) desde = t.hastaKg;
+  }
+  return out;
 }
 
 export function filasZonas(t: Tarifas, ciudad: Ciudad): FilaZona[] {

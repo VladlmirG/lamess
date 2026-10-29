@@ -6,13 +6,16 @@
 // 27-oct · Ya no hay que cambiarlas a mano: los importes (recogida, express,
 // lluvia, peso, por horas) llegan de la app por /api/reglas. Mientras llegan,
 // o si no llegan, los de respaldo (los de siempre).
+//
+// 28-oct · El peso, también por tramos si la tarifa de la app va así. Las
+// reglas se piden con `useReglasDeLaApp` (una sola vez para todo el inicio).
 
 import "./inicio.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { TELEFONO, URL_REGISTRO } from "@/lib/enlaces";
 import { textosReglas } from "@/lib/precio";
-import { leerReglas, REGLAS_RESPALDO, type Reglas } from "@/lib/tarifas";
+import { useReglasDeLaApp } from "@/lib/reglasNavegador";
+import type { Reglas } from "@/lib/tarifas";
 
 function preguntas(r: Reglas): { pregunta: string; respuesta: React.ReactNode }[] {
   const tx = textosReglas(r);
@@ -35,7 +38,7 @@ function preguntas(r: Reglas): { pregunta: string; respuesta: React.ReactNode }[
     },
     {
       pregunta: "¿Y si llueve o pesa mucho?",
-      respuesta: `Si ese día llueve, ${tx.lluvia}. Hasta ${tx.kg} kg va incluido; cada kilo de más, ${tx.eurKg}.`,
+      respuesta: `Si ese día llueve, ${tx.lluvia}. ${tx.pesoFrase}`,
     },
     {
       pregunta: "¿Puedo hacer varias entregas en una ruta?",
@@ -49,16 +52,7 @@ function preguntas(r: Reglas): { pregunta: string; respuesta: React.ReactNode }[
 }
 
 export default function PreguntasFrecuentes() {
-  const [reglas, setReglas] = useState<Reglas>(REGLAS_RESPALDO);
-
-  useEffect(() => {
-    let vivo = true;
-    fetch("/api/reglas")
-      .then(r => (r.ok ? r.json() : null))
-      .then((c: { reglas?: unknown } | null) => { if (vivo && c?.reglas) setReglas(leerReglas(c.reglas)); })
-      .catch(() => { /* se quedan las de respaldo */ });
-    return () => { vivo = false; };
-  }, []);
+  const { reglas } = useReglasDeLaApp();
 
   return (
     <section className="lmi lmi-preguntas" aria-labelledby="lmi-preguntas">

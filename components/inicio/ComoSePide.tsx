@@ -5,6 +5,7 @@
 import "./inicio.css";
 import FadeInSection from "@/components/tabula-rasa/FadeInSection";
 import { TELEFONO, URL_ENTRAR, URL_REGISTRO } from "@/lib/enlaces";
+import PrecioEjemplo from "@/components/inicio/PrecioEjemplo";
 
 const IconoEntrar = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><path d="m10 17 5-5-5-5" /><path d="M15 12H3" /></svg>
@@ -56,7 +57,7 @@ export default function ComoSePide() {
               <span className="lmi-mini-titulo">Nueva entrega</span>
               <span className="lmi-mini-punto"><i data-r="1">R</i>Carrer de Còrsega, 302</span>
               <span className="lmi-mini-punto"><i>1</i>Carrer de Pujades, 77</span>
-              <span className="lmi-mini-precio"><span>Mañana · 9:00–12:00</span><strong>11,00 €</strong></span>
+              <span className="lmi-mini-precio"><span>Mañana · 9:00–12:00</span><strong><PrecioEjemplo /></strong></span>
               <span className="lmi-mini-boton">Pedir</span>
             </div>
           </li>

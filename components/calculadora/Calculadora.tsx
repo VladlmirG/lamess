@@ -15,7 +15,7 @@ import "./calculadora.css";
 import BuscadorDireccion, { type ChipDireccion } from "./BuscadorDireccion";
 import type { PinMapa } from "./MapaRuta";
 import { CO2_G_POR_KM, rutaEnBici, TOKEN_MAPBOX, type Punto, type Ruta } from "@/lib/mapbox";
-import { calcularPrecio, ciudadDeCp, esFestivo, hoyEnMadrid, sumarDias, zonaDeCp, textosReglas, type LineaPrecio, type ResultadoPrecio } from "@/lib/precio";
+import { calcularPrecio, ciudadDeCp, esFestivo, hoyEnMadrid, sumarDias, tarifasDelDia, zonaDeCp, textosReglas, type LineaPrecio, type ResultadoPrecio } from "@/lib/precio";
 import type { Ciudad, Tarifas } from "@/lib/tarifas";
 import { TELEFONO, URL_ENTRAR, URL_REGISTRO, URL_TELEFONO, whatsapp } from "@/lib/enlaces";
 
@@ -52,7 +52,6 @@ function useRuta(puntos: [number, number][]): Ruta | null {
 }
 
 export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
-  const tx = textosReglas(tarifas.reglas);
   const conMapbox = TOKEN_MAPBOX !== "";
   const hoy = useSyncExternalStore(sinSuscripcion, () => hoyEnMadrid(), () => null);
   const [recogida, setRecogida] = useState<Punto | null>(null);
@@ -69,6 +68,8 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
 
   const manana = hoy ? sumarDias(hoy, 1) : null;
   const fecha = dia === "hoy" ? hoy : dia === "manana" ? manana : otraFecha || null;
+  // 28-oct · Los textos, de la tarifa del día elegido (si la app tiene una programada, desde su día).
+  const tx = textosReglas(tarifasDelDia(tarifas, fecha ?? "").reglas);
 
   // La ciudad sale de la recogida (por su código postal, como la app).
   const ciudad: Ciudad | null = ciudadDeCp(recogida?.cp);
@@ -172,6 +173,8 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
     }
   }
   notas.push(`Esperas: hasta ${tx.minGratis} minutos, gratis; si pasan de ${tx.minGratis}, toda la espera a ${tx.eurMin} el minuto. Van aparte.`);
+  // 28-oct · Si el día elegido ya tiene la tarifa nueva que hay programada en la app.
+  if (precio?.tarifaDesde) notas.push(`Con la tarifa nueva, que empieza el ${diaLargo(precio.tarifaDesde)}.`);
 
   const total = precio ? eur(precio.total) : "—";
   const resumen = precio && fecha
@@ -349,7 +352,7 @@ export default function Calculadora({ tarifas }: { tarifas: Tarifas }) {
                 <input id="lmc-kg" type="number" min="0" step="0.1" inputMode="decimal" placeholder="0" value={kg} onChange={e => setKg(e.target.value)} aria-describedby="lmc-kg-ayuda" />
                 <span>kg</span>
               </div>
-              <span id="lmc-kg-ayuda" className="lmc-ayuda">Hasta {tx.kg} kg, incluido. Cada kilo de más: {tx.eurKg}.</span>
+              <span id="lmc-kg-ayuda" className="lmc-ayuda">{tx.pesoAyuda}</span>
             </div>
             <button type="button" role="switch" aria-checked={lluvia} className="lmc-lluvia" onClick={() => setLluvia(v => !v)}>
               <span aria-hidden="true" className="lmc-interruptor" />
